@@ -1,0 +1,22 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task showHome << {
+    println gradle.gradleHomeDir
+}
+
+task build
+build.dependsOn("SimulArroz(Java):build")
+
+task copyModelExecutable (type:Copy) {
+    from 'SimulArroz(Fortran)/dist/debug/linux/'
+    into 'SimulArroz(Java)/'
+    rename 'SimulArroz', 'SimulArroz.run'
+
+}
+build.dependsOn(copyModelExecutable)
+
+task makeModel(type:Exec) {
+    workingDir 'SimulArroz(Fortran)'
+    executable 'make'
+}
+copyModelExecutable.dependsOn(makeModel)
