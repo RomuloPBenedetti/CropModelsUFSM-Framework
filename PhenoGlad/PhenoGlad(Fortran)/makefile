@@ -1,4 +1,3 @@
-
 # debugging makefile, use it only for developmente compilation
 # as it uses the worst optimizations mode, but at all avoid
 # the compiller to make undebugable optimizations
@@ -38,7 +37,7 @@ OBJECTDIR = ${BUILDDIR}/${CONF}/${PLATFORM}
 BINDIR = ${DISTDIR}/${CONF}/${PLATFORM}
 
 OBJECTFILES = ${OBJECTDIR}/Data.o \
-			  ${OBJECTDIR}/Main.o \
+              ${OBJECTDIR}/Main.o \
 			  ${OBJECTDIR}/Model.o \
 			  ${OBJECTDIR}/Control.o \
 			  ${OBJECTDIR}/Farmings.o
@@ -67,3 +66,5 @@ clean :
 	${RM} -fr ${BUILDDIR}
 	${RM} -fr ${DISTDIR}
 	${RM} -f seed.mod
+
+# TODO:10  2015-11-20 criar hierarquia de automatização para a interface, o instalador e o modelo com make files e gradle e automatizar as seguintes regras: +debug +release +test @automatização

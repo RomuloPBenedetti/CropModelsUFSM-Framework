@@ -1,6 +1,6 @@
 apply plugin: 'application'
 
-mainClassName = "SimulArroz.graphic.Gui"
+mainClassName = "Simanihot.graphic.Gui"
 applicationDefaultJvmArgs = ["-Dprism.text=t2k -Dprism.lcdtext=true" +
                              " -Xms256m"]
 
@@ -8,13 +8,13 @@ sourceCompatibility = 1.8
 version = '1.0'
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'SimulArroz.graphic.Gui'
+    ext.mainClass = 'Simanihot.graphic.Gui'
 }
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'SimulArroz',
-                'Main-Class': 'SimulArroz.graphic.Gui',
+        attributes 'Implementation-Title': 'Simanihot',
+                'Main-Class': 'Simanihot.graphic.Gui',
                 'Class-Path': '.',
                 'Implementation-Version': version
     }

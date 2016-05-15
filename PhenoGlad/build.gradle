@@ -1,0 +1,22 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task showHome << {
+    println gradle.gradleHomeDir
+}
+
+task build
+build.dependsOn("PhenoGlad(Java):build")
+
+task copyModelExecutable (type:Copy) {
+    from 'PhenoGlad(Fortran)/dist/debug/linux/'
+    into 'PhenoGlad(java)/'
+    rename 'PhenoGlad', 'PhenoGlad.run'
+
+}
+build.dependsOn(copyModelExecutable)
+
+task makeModel(type:Exec) {
+    workingDir 'PhenoGlad(Fortran)'
+    executable 'make'
+}
+copyModelExecutable.dependsOn(makeModel)

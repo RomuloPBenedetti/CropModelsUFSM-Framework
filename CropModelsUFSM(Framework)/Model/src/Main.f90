@@ -19,7 +19,7 @@
 !       day after day.
 !***********************************************************************
 
-program SimulArroz
+program CropModel
     use SEED
     CHARACTER (LEN=30)  :: outputFile
 
@@ -34,4 +34,4 @@ program SimulArroz
     call WRITE_HEADER_ON_RESULTS ()
     call SIMULATE ()
 
-end program SimulArroz
+end program CropModel

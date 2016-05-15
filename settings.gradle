@@ -1,0 +1,3 @@
+include 'SimulArroz', 'SimulArroz:SimulArroz(Java)'
+include 'Simanihot', 'Simanihot:Simanihot(Java)'
+include 'PhenoGlad', 'PhenoGlad:PhenoGlad(Java)'

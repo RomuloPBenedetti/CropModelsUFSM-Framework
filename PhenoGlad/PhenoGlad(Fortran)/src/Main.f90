@@ -19,19 +19,19 @@
 !       day after day.
 !***********************************************************************
 
-program SimulArroz
+program PhenoGlad
     use SEED
     CHARACTER (LEN=30)  :: outputFile
 
-    open (1,file='files/meteorologicFile.txt')
+    open (1,file='files/tempveg.txt')
 
     call READ_INPUT_FROM_KEYBOARD ()
     call FILL_PRE_SIMULATE_VARIABLES ()
 
-    write (outputFile,'(A6, I4, A10)') "files/", initYear, "resultFile.txt"
+    write (outputFile,'(A6, I4, A10)') "files/", initYear, "result.txt"
     open (2,file = outputFile )
 
-    call WRITE_HEADER_ON_RESULTS ()
+    call WRITE_HEADER_ON_RESULTS
     call SIMULATE ()
 
-end program SimulArroz
+end program PhenoGlad

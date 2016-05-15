@@ -1,18 +1,18 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 task build
-build.dependsOn("SimulArroz(Java):build")
+build.dependsOn("Simanihot(Java):build")
 
 task copyModelExecutable (type:Copy) {
-    from 'SimulArroz(Fortran)/dist/debug/linux/'
-    into 'SimulArroz(Java)/'
-    rename 'SimulArroz', 'SimulArroz.run'
+    from 'Simanihot(Fortran)/dist/debug/linux/'
+    into 'Simanihot(Java)/'
+    rename 'Simanihot', 'Simanihot.run'
 
 }
 build.dependsOn(copyModelExecutable)
 
 task makeModel(type:Exec) {
-    workingDir 'SimulArroz(Fortran)'
+    workingDir 'Simanihot(Fortran)'
     executable 'make'
 }
 copyModelExecutable.dependsOn(makeModel)

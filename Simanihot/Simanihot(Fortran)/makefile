@@ -1,4 +1,3 @@
-
 # debugging makefile, use it only for developmente compilation
 # as it uses the worst optimizations mode, but at all avoid
 # the compiller to make undebugable optimizations
@@ -37,8 +36,8 @@ FCFLAGS += -I/usr/include
 OBJECTDIR = ${BUILDDIR}/${CONF}/${PLATFORM}
 BINDIR = ${DISTDIR}/${CONF}/${PLATFORM}
 
-OBJECTFILES = ${OBJECTDIR}/Data.o \
-			  ${OBJECTDIR}/Main.o \
+OBJECTFILES = ${OBJECTDIR}/result.o \
+              ${OBJECTDIR}/Main.o \
 			  ${OBJECTDIR}/Model.o \
 			  ${OBJECTDIR}/Control.o \
 			  ${OBJECTDIR}/Farmings.o
@@ -53,6 +52,12 @@ PROGRAM = ${BINDIR}/PhenoGlad
 ${PROGRAM}: ${OBJECTFILES}
 	${MKDIR} -p ${BINDIR}
 	${FCOMPILER} ${FCFLAGS} -o $@ $^ -static
+
+${OBJECTDIR}/result.o:  ${SRCDIR}/result.f90
+${OBJECTDIR}/Main.o:    ${SRCDIR}/Main.f90
+${OBJECTDIR}/Model.o:   ${SRCDIR}/Model.f90
+${OBJECTDIR}/Control.o: ${SRCDIR}/Control.f90
+${OBJECTDIR}/Farmings.o: ${SRCDIR}/Farmings.f90
 
 # % is a wildcard meaning anything
 # $@ the name of the _target_ file of the rule
