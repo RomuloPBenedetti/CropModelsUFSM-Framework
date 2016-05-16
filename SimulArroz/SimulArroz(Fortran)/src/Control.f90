@@ -12,6 +12,8 @@
 subroutine READ_INPUT_FROM_KEYBOARD ()
     use SEED
 
+    PRINT *, "MENSAGEM DE TESTE"
+
     return
 end
 

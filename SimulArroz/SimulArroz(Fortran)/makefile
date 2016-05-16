@@ -14,9 +14,7 @@
 SRCDIR = src
 BUILDDIR = build
 DISTDIR = dist
-
 CONF = debug
-PLATFORM = linux
 
 # base system components
 # programs used by make, compiler, linker, etc
@@ -34,8 +32,8 @@ FCFLAGS += -I/usr/include
 # directorie names and macros
 # macros are reductions of names or predefined values concatenated
 
-OBJECTDIR = ${BUILDDIR}/${CONF}/${PLATFORM}
-BINDIR = ${DISTDIR}/${CONF}/${PLATFORM}
+OBJECTDIR = ${BUILDDIR}/${CONF}
+BINDIR = ${DISTDIR}/${CONF}
 
 OBJECTFILES = ${OBJECTDIR}/Data.o \
 			  ${OBJECTDIR}/Main.o \
@@ -43,7 +41,7 @@ OBJECTFILES = ${OBJECTDIR}/Data.o \
 			  ${OBJECTDIR}/Control.o \
 			  ${OBJECTDIR}/Farmings.o
 
-PROGRAM = ${BINDIR}/PhenoGlad
+PROGRAM = ${BINDIR}/SimulArroz
 
 # compilation rules
 # recipes for compiling of each object and linking of the program
@@ -67,3 +65,6 @@ clean :
 	${RM} -fr ${BUILDDIR}
 	${RM} -fr ${DISTDIR}
 	${RM} -f seed.mod
+
+run :
+	cd dist/debug ; ./SimulArroz
