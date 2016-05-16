@@ -4,6 +4,7 @@ task showHome << {
     println gradle.gradleHomeDir
 }
 
+/*
 task build
 build.dependsOn("PhenoGlad(Java):build")
 
@@ -20,3 +21,4 @@ task makeModel(type:Exec) {
     executable 'make'
 }
 copyModelExecutable.dependsOn(makeModel)
+*/
