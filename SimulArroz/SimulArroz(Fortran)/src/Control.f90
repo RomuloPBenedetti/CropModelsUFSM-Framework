@@ -12,8 +12,60 @@
 subroutine READ_INPUT_FROM_KEYBOARD ()
     use SEED
 
-    PRINT *, "MENSAGEM DE TESTE"
-
+     PRINT*, 'INFORME A DATA DE SEMEADURA (DIA DO ANO).'
+     READ*, SEM
+     
+     PRINT*, 'INFORME O ANO DE INÍCIO DA SIMULAÇÃO'
+     READ*, ANO1
+     
+     PRINT*, 'INORME O ULTIMO ANO DE SIMULAÇÃO'
+     READ*, ANO2
+     
+     PRINT*, 'INFORME A CONCENTRAÇÃO DE CO2 NA ATMOSFERA (ppm):'
+     READ*, CO2
+     
+     PRINT*, 'PARA ESCOLHER CULTIVARES, DIGITE 1'
+     PRINT*, 'PARA ESCOLHER GRUPOS DE MATURA��O, DIGITE 2'
+     READ*, RESP1
+     
+     if (RESP1.EQ.1)  then
+         PRINT*, 'INFORME A CULTIVAR (DIGITE O NUMERO CORRESPONDENTE):'
+         PRINT*, 'IRGA421 = 1'
+         PRINT*, 'IRGA416 = 2'
+         PRINT*, 'BRS QUERENCIA = 3'
+         PRINT*, 'IRGA417 = 4'
+         PRINT*, 'IRGA420 = 5'
+         PRINT*, 'BRIRGA409 = 6'
+         PRINT*, 'BRS7TAIM = 7'
+         PRINT*, 'IRGA424 = 8'
+         PRINT*, 'TIO TAKA = 9'
+         PRINT*, 'EPAGRI109 = 10'
+         PRINT*, 'EEA406 = 11'
+         PRINT*, 'INOV CL = 12'
+         PRINT*, 'QM1010 CL = 13'
+         PRINT*, 'PRIME CL = 14'
+         READ*, CULT
+     endif
+     
+     if  (RESP1.EQ.2) then
+         PRINT*, 'INFORME O GRUPO DE MATURAÇÃO):'
+         PRINT*, 'MUITO PRECOCE=1'
+         PRINT*, 'PRECOCE=2'
+         PRINT*, 'MÉDIO=3'
+         PRINT*, 'TARDIO=4'
+         READ*, GM
+     endif
+     
+     PRINT*,'INFORME A DENSIDADE DE PLANTAS (número de plantas por m2)'
+     READ*, POP
+     
+     PRINT*, 'INFORME O NÍVEL TECNOLÓGICO DA LAVOURA:'
+     PRINT*, 'POTENCIAL = 1'
+     PRINT*, 'ALTO = 2'
+     PRINT*, 'MÉDIO = 3'
+     PRINT*, 'BAIXO = 4'
+     READ*,  RESP3
+ 
     return
 end
 
@@ -140,7 +192,12 @@ end
 
 subroutine PRE_SIMULATION_CHECKS ()
     use SEED
-
+    
+    if  ((initYear.EQ.year(i))  .AND. (initDay.EQ.day(i)) ) then
+        firstDay = .true.
+        simulating = .true.
+    endif
+    
     return
 end
 !***********************************************************************
