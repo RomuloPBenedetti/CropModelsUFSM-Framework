@@ -13,22 +13,22 @@ subroutine READ_INPUT_FROM_KEYBOARD ()
     use SEED
 
      PRINT*, 'INFORME A DATA DE SEMEADURA (DIA DO ANO).'
-     READ*, SEM
+     READ*, initDay
      
      PRINT*, 'INFORME O ANO DE INÍCIO DA SIMULAÇÃO'
-     READ*, ANO1
+     READ*, initYear
      
      PRINT*, 'INORME O ULTIMO ANO DE SIMULAÇÃO'
-     READ*, ANO2
+     READ*, lastYear
      
      PRINT*, 'INFORME A CONCENTRAÇÃO DE CO2 NA ATMOSFERA (ppm):'
      READ*, CO2
      
      PRINT*, 'PARA ESCOLHER CULTIVARES, DIGITE 1'
      PRINT*, 'PARA ESCOLHER GRUPOS DE MATURA��O, DIGITE 2'
-     READ*, RESP1
+     READ*, resposta1
      
-     if (RESP1.EQ.1)  then
+     if (resposta1.EQ.1)  then
          PRINT*, 'INFORME A CULTIVAR (DIGITE O NUMERO CORRESPONDENTE):'
          PRINT*, 'IRGA421 = 1'
          PRINT*, 'IRGA416 = 2'
@@ -44,27 +44,27 @@ subroutine READ_INPUT_FROM_KEYBOARD ()
          PRINT*, 'INOV CL = 12'
          PRINT*, 'QM1010 CL = 13'
          PRINT*, 'PRIME CL = 14'
-         READ*, CULT
+         READ*, cultivar
      endif
      
-     if  (RESP1.EQ.2) then
+     if  (resposta1.EQ.2) then
          PRINT*, 'INFORME O GRUPO DE MATURAÇÃO):'
          PRINT*, 'MUITO PRECOCE=1'
          PRINT*, 'PRECOCE=2'
          PRINT*, 'MÉDIO=3'
          PRINT*, 'TARDIO=4'
-         READ*, GM
+         READ*, grupoMaturacao
      endif
      
      PRINT*,'INFORME A DENSIDADE DE PLANTAS (número de plantas por m2)'
-     READ*, POP
+     READ*, populacao
      
      PRINT*, 'INFORME O NÍVEL TECNOLÓGICO DA LAVOURA:'
      PRINT*, 'POTENCIAL = 1'
      PRINT*, 'ALTO = 2'
      PRINT*, 'MÉDIO = 3'
      PRINT*, 'BAIXO = 4'
-     READ*,  RESP3
+     READ*,  resposta3
  
     return
 end
@@ -80,7 +80,46 @@ end
 
 subroutine FILL_PRE_SIMULATE_VARIABLES ()
     use SEED
+    
+    if (resposta1 .EQ. 1) then
+        select case (cultivar)
+            case(1)  ; call CULTIVAR1  ()
+            case(2)  ; call CULTIVAR2  ()
+            case(3)  ; call CULTIVAR3  ()
+            case(4)  ; call CULTIVAR4  ()
+            case(5)  ; call CULTIVAR5  ()
+            case(6)  ; call CULTIVAR6  ()
+            case(7)  ; call CULTIVAR7  ()
+            case(8)  ; call CULTIVAR8  ()
+            case(9)  ; call CULTIVAR9  ()
+            case(10) ; call CULTIVAR10 ()
+            case(11) ; call CULTIVAR11 ()    
+            case(12) ; call CULTIVAR12 ()    
+            case(13) ; call CULTIVAR13 ()    
+            case(14) ; call CULTIVAR14 ()    
+        end select
+    else
+        select case (grupoMaturacao)
+            case(1) ; call MUITOPRECOCE ()
+            case(2) ; call PRECOCE ()
+            case(3) ; call MEDIO ()
+            case(4) ; call TARDIO ()
+        end select
+    endif
 
+    TBDV = 11.0  ; TODV = 30.0  ; TMDV = 40.0
+    TBDR = 15.0 ; TODR = 25.0 ; TMDR = 35.0
+    TBDG = 15.0 ; TODG = 23.0 ; TMDG = 35.0
+    TCMIN = 11.0 ; TCOT = 26.0 ; TCMAX = 40.0
+    E=0.65924569
+    lowTempCont = 0 ; hightTempCont = 0 ; i = 0
+    V = nn ; R = nn ; G = nn ; N = nn ; DVSEnd = nn
+    alfaS = 2*((TMED-TCMIN)**ALFA)
+    alfaV = log (2.) / log ((THV - TBV) / (TOV - TBV))
+    alfaR = log (2.) / log ((THR - TBR) / (TOR - TBR))
+    simulating = .false. ; firstDay = .false.
+    vegetative = .false. ;  reprodutive = .false. grainfill = .false.
+    
     return
 end
 
@@ -248,7 +287,14 @@ end
 
 subroutine READ_METEOROLOGIC_DATA_FROM_DAY ()
     use SEED
-
+    
+    read (1,*,IOSTAT = ioErr) year(i), day(i), tmin(i), tmax(i), radSol(i)   
+    tmed(i) = (tmin(i) + tmax(i)) / 2 
+    
+    if (ioErr . LT. 0) then
+        simulating = .false.
+    end if 
+    
     return
 end
 
@@ -263,8 +309,18 @@ end
 !***********************************************************************
 
 subroutine WRITE_HEADER_ON_RESULTS ()
+    
+    write (2,20) 'IANO IDIA TMIN TMAX TMED RADSOL STVG STRP STEG &
+                   DVS DREM DRVG DRRP DREG HS GCROP RWLVG WLVG &
+                   RWSTG WSTG RWSOG WSOG RWRTG WRTG LAI DLV &
+                   DST SODAY TOTALSO PESODIA PESO1 PESOG DAS'
 
-
+ 20 format (i4, 1x,i3, 1x,f5.1, 1x,f5.1, 1x,f5.1, 1x,f4.1, 1x,f6.2, 1x,f6.2, &
+            1x,f6.2, 1x,f7.4, 1x,f7.4, 1x,f7.4, 1x,f7.4, 1x,f7.4, 1x,f4.1, 1x,f10.4, &
+            1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4,1x, &
+            F10.4, 1x,f6.2, 1x,f5.2, 1x,f5.2, 1x,f12.2, 1x,f12.2, 1x,f7.4, 1x,f7.4,1x, &
+            F6.1, 1x,i3)
+     
      return
 end
 
@@ -280,6 +336,17 @@ end
 
 subroutine WRITE_RESULTING_DATA ()
     use SEED
-
+        
+    write (2,30) IANO, IDIA, TMIN, TMAX, TMED, RADSOL, STVG, STRP, & 
+                STEG,  DVS, DREM, DRVG, DRRP, DREG, HS, GCROP, RWLVG, &
+                WLVG, RWSTG, WSTG, RWSOG, WSOG, RWRTG, WRTG, LAI, &
+                 DLV, DST, SODAY, TOTALSO, PESODIA, PESO1, PESOG, DAS
+                 
+  30 format  (i4, 1x,i3, 1x,f5.1, 1x,f5.1, 1x,f5.1, 1x,f4.1, 1x,f6.2, 1x,f6.2, &
+             1x,f6.2, 1x,f7.4, 1x,f7.4, 1x,f7.4, 1x,f7.4, 1x,f7.4, 1x,f4.1, 1x,f10.4, &
+             1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4, 1x,f10.4,1x, &
+             F10.4, 1x,f6.2, 1x,f5.2, 1x,f5.2, 1x,f12.2, 1x,f12.2, 1x,f7.4, 1x,f7.4,1x, &
+             F6.1, 1x,i3)
+             
     return
 end
