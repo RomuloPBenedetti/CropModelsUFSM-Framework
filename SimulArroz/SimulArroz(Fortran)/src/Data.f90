@@ -16,7 +16,7 @@ module SEED
     real*4 STVG(nn),STRP(nn),STEG(nn)
     
     real*4 TTEM, TTVG, TTRP, TTEG, LARMAX
-    real*4 PMAX, E, 
+    real*4 PMAX, E, FC1, alfa, FT,
     
     real*4 DREM(nn), DRVG(nn), DRRP(nn), DREG(nn)
     

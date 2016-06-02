@@ -114,9 +114,7 @@ subroutine FILL_PRE_SIMULATE_VARIABLES ()
     E=0.65924569
     lowTempCont = 0 ; hightTempCont = 0 ; i = 0
     V = nn ; R = nn ; G = nn ; N = nn ; DVSEnd = nn
-    alfaS = 2*((TMED-TCMIN)**ALFA)
-    alfaV = log (2.) / log ((THV - TBV) / (TOV - TBV))
-    alfaR = log (2.) / log ((THR - TBR) / (TOR - TBR))
+    alfa=LOG(2.0)/E
     simulating = .false. ; firstDay = .false.
     vegetative = .false. ;  reprodutive = .false. grainfill = .false.
     

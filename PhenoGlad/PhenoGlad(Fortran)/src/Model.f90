@@ -30,8 +30,8 @@ subroutine DEVELOPMENTAL_STAGES (TB, TO, TH, alfa, R, rMax)
         fTMed(i) = 0.0
     elseif ((tmed(i) .GE. TB) .AND. (tmed(i) .LE. TH)) then
         fTMed(i) = (2 *  ((tmed(i) - TB) ** (alfa)) * &
-                         ((TO - TB) ** (alfa)) - &
-                         ((tmed(i) - TB) ** (2 * alfa)) &
+                            ((TO - TB) ** (alfa)) - &
+                            ((tmed(i) - TB) ** (2 * alfa)) &
                     ) /  ((TO - TB) ** (2 * alfa))
     elseif (tmed(i) .GT. TH) then
         fTMed(i) = 0.0
