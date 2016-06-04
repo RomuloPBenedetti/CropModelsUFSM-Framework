@@ -120,7 +120,7 @@ subroutine CULTIVAR14 ()
     return
 end
 
-subroutine MUITOPRECOCE () 
+subroutine MUITOPRECOCE ()
     use SEED
     TTEM = 50.0 ; TTVG = 437.9
     TTRP = 108.2 ; TTEG = 113.1
@@ -128,7 +128,7 @@ subroutine MUITOPRECOCE ()
     return
 end
 
-subroutine PRECOCE () 
+subroutine PRECOCE ()
     use SEED
     TTEM = 50.0 ; TTVG = 521.90
     TTRP = 163.07 ; TTEG = 109.72
@@ -136,7 +136,7 @@ subroutine PRECOCE ()
     return
 end
 
-subroutine MEDIO () 
+subroutine MEDIO ()
     use SEED
     TTEM = 50.0 ; TTVG = 605.8
     TTRP = 210.1 ; TTEG = 109.09
@@ -144,11 +144,132 @@ subroutine MEDIO ()
     return
 end
 
-subroutine TARDIO () 
+subroutine TARDIO ()
     use SEED
     TTEM = 50.0 ; TTVG = 801.78
     TTRP = 203.98 ; TTEG = 102.38
     LARMAX = 0.326
     return
 end
-    
+<<<<<<< Updated upstream
+=======
+
+subroutine PARTICAO_MATERIA_SECA_COM_DVS_000_ATE_043
+  use SEED
+
+  if ((resposta1 .EQ. 1) .AND. (resposta1 .EQ. 2)) then
+    FSH = 0.5 ; FLV = 0.6 ; FST = 0.4 ; FSO = 0.0
+    if (cultivar .EQ. 12) then
+      FSH = 0.5  ; FLV = 0.5  ; FST = 0.5  ; FSO = 0.0
+    elseif (cultivar .EQ. 13)
+      FSH = 0.5  ; FLV = 0.45 ; FST = 0.55 ; FSO = 0.0
+    elseif (cultivar .EQ. 13)
+      FSH = 0.5  ; FLV = 0.3  ; FST = 0.7  ; FSO = 0.0
+    endif
+  endif
+
+  return
+end
+
+subroutine PARTICAO_MATERIA_SECA_COM_DVS_043_ATE_075
+  use SEED
+
+  if ((resposta1 .EQ. 1) .AND. (resposta1 .EQ. 2)) then
+    FSH = 0.75 ; FLV = 0.6 ; FST = 0.4 ; FSO = 0.0
+    if (cultivar .EQ. 12) then
+      FSH = 0.75 ; FLV = 0.47 ; FST = 0.53 ; FSO = 0.0
+    elseif (cultivar .EQ. 13)
+      FSH = 0.75 ; FLV = 0.46 ; FST = 0.54 ; FSO = 0.0
+    elseif (cultivar .EQ. 13)
+      FSH = 0.75 ; FLV = 0.28 ; FST = 0.72 ; FSO = 0.0
+    endif
+  endif
+
+  return
+end
+
+subroutine PARTICAO_MATERIA_SECA_COM_DVS_075_ATE_100
+  use SEED
+
+  if ((resposta1 .EQ. 1) .AND. (resposta1 .EQ. 2)) then
+    FSH = 0.75 ; FLV = 0.3 ; FST = 0.7 ; FSO = 0.0
+    if (cultivar .EQ. 12) then
+      FSH = 0.75 ; FLV = 0.20 ; FST = 0.80 ; FSO = 0.0
+    elseif (cultivar .EQ. 13)
+      FSH = 0.75 ; FLV = 0.16 ; FST = 0.84 ; FSO = 0.0
+    elseif (cultivar .EQ. 13)
+      FSH = 0.75 ; FLV = 0.57 ; FST = 0.43 ; FSO = 0.0
+    endif
+  endif
+
+  return
+end
+
+subroutine PARTICAO_MATERIA_SECA_COM_DVS_100_ATE_120
+  use SEED
+
+  if ((resposta1 .EQ. 1) .AND. (resposta1 .EQ. 2)) then
+    FSH = 1.0 ; FLV = 0.0 ; FST = 0.4 ; FSO = 0.6
+    if (cultivar .EQ. 12) then
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.3  ; FSO = 0.7
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.3  ; FSO = 0.7
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    endif
+  endif
+
+  return
+end
+
+subroutine PARTICAO_MATERIA_SECA_COM_DVS_120_ATE_160
+  use SEED
+
+  if ((resposta1 .EQ. 1) .AND. (resposta1 .EQ. 2)) then
+    FSH = 1.0 ; FLV = 0.0 ; FST = 0.0 ; FSO = 1.0
+    if (cultivar .EQ. 12) then
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    endif
+  endif
+
+  return
+end
+
+subroutine PARTICAO_MATERIA_SECA_COM_DVS_160_ATE_210
+  use SEED
+
+  if ((resposta1 .EQ. 1) .AND. (resposta1 .EQ. 2)) then
+    FSH = 1.0 ; FLV = 0.0 ; FST = 0.0 ; FSO = 1.0
+    if (cultivar .EQ. 12) then
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    endif
+  endif
+
+  return
+end
+
+subroutine PARTICAO_MATERIA_SECA_COM_DVS_MAIOR_210
+  use SEED
+
+  if ((resposta1 .EQ. 1) .AND. (resposta1 .EQ. 2)) then
+    FSH = 1.0 ; FLV = 0.0 ; FST = 0.0 ; FSO = 1.0
+    if (cultivar .EQ. 12) then
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    elseif (cultivar .EQ. 13)
+      FSH = 1.0  ; FLV = 0.0  ; FST = 0.0  ; FSO = 1.0
+    endif
+  endif
+
+  return
+end
+>>>>>>> Stashed changes
