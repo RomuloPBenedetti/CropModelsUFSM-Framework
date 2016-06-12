@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.*?>
+
+<Group fx:id="root" stylesheets="@/Gui.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cropModelsUFSM.control.GuiController">
+   <children>
+      <StackPane id="transparencyBase" fx:id="transparentPane">
+         <children>
+            <AnchorPane id="border" onMouseMoved="#resizeEvent" pickOnBounds="false">
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+               <children>
+                  <BorderPane id="base" fx:id="roundBorderPane" layoutX="9.0" layoutY="1.0" AnchorPane.leftAnchor="0.0">
+                     <top>
+                        <AnchorPane id="topPane" BorderPane.alignment="CENTER">
+                           <children>
+                              <ImageView id="imageView" fx:id="downImv" blendMode="SRC_ATOP" cacheHint="QUALITY" fitWidth="800.0" layoutX="10.0" layoutY="10.0" onMouseDragged="#moveWindow" onMousePressed="#moveWindowInitialPosition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <image>
+                                    <Image url="@images/ShadeImages/10.jpeg" />
+                                 </image>
+                                 <viewport>
+                                    <Rectangle2D height="150.0" minX="560.0" width="800.0" />
+                                 </viewport>
+                                 <cursor>
+                                    <Cursor fx:constant="MOVE" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView id="imageView" fx:id="upImv" blendMode="SRC_ATOP" cache="true" cacheHint="SPEED" depthTest="DISABLE" mouseTransparent="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <image>
+                                    <Image url="@images/ShadeImages/7FOLD.jpeg" />
+                                 </image>
+                                 <viewport>
+                                    <Rectangle2D height="150.0" minX="560.0" width="800.0" />
+                                 </viewport>
+                                 <cursor>
+                                    <Cursor fx:constant="MOVE" />
+                                 </cursor>
+                              </ImageView>
+                              <MediaView fx:id="video" blendMode="SRC_ATOP" cache="true" cacheHint="SPEED" mouseTransparent="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <viewport>
+                                    <Rectangle2D height="150.0" minX="560.0" width="800.0" />
+                                 </viewport></MediaView>
+                              <ImageView mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0">
+                                 <image>
+                                    <Image url="@images/logoW.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView blendMode="LIGHTEN" fitHeight="76.0" fitWidth="86.0" layoutX="688.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" scaleX="1.3" scaleY="1.3" AnchorPane.rightAnchor="33.15888214111328">
+                                 <image>
+                                    <Image url="@images/UfsmLogoGlow.png" />
+                                 </image>
+                              </ImageView>
+                              <AnchorPane id="statusPane" depthTest="ENABLE" onMouseDragged="#moveWindow" onMousePressed="#moveWindowInitialPosition" snapToPixel="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <MenuBar id="menuBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <menus>
+                                        <Menu mnemonicParsing="false" text="%key1">
+                                          <items>
+                                            <MenuItem mnemonicParsing="false" onAction="#closeAction" text="%key4" />
+                                          </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="%key2">
+                                          <items>
+                                            <MenuItem mnemonicParsing="false" onAction="#settingsAction" text="%key5" />
+                                          </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="%key3">
+                                          <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#helpAction" text="%key3" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                                <MenuItem mnemonicParsing="false" onAction="#legendAction" text="%key67" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                            <MenuItem mnemonicParsing="false" onAction="#aboutAction" text="%key6" />
+                                          </items>
+                                        </Menu>
+                                      </menus>
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                    </MenuBar>
+                                    <StackPane id="windowButton" onMouseClicked="#closeAction" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0">
+                                       <children>
+                                          <ImageView pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/icons/closeButtonWhite.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                    </StackPane>
+                                    <StackPane id="windowButton" blendMode="ADD" onMouseClicked="#maximizeAction" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="7.0">
+                                       <children>
+                                          <ImageView pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/icons/maximizeButtonWhite.png" />
+                                             </image>
+                                             <StackPane.margin>
+                                                <Insets />
+                                             </StackPane.margin>
+                                          </ImageView>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                    </StackPane>
+                                    <StackPane id="windowButton" onMouseClicked="#minimizeAction" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="90.0">
+                                       <children>
+                                          <ImageView pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/icons/minimizerButtonWhite.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                    </StackPane>
+                                 </children>
+                                 <cursor>
+                                    <Cursor fx:constant="MOVE" />
+                                 </cursor>
+                              </AnchorPane>
+                              <HBox layoutX="4.0" layoutY="109.0" prefHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <Button id="tableButton" mnemonicParsing="false" onMouseClicked="#changePaneAction" prefHeight="40.0" text="%key17" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets bottom="7.0" left="20.0" right="20.0" />
+                                       </HBox.margin></Button>
+                                    <Button id="tableButton" mnemonicParsing="false" onMouseClicked="#changePaneAction" prefHeight="40.0" text="%key18" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets bottom="7.0" right="20.0" />
+                                       </HBox.margin></Button>
+                                    <Button id="tableButton" mnemonicParsing="false" onMouseClicked="#changePaneAction" prefHeight="40.0" text="%key19" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets bottom="7.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </AnchorPane>
+                     </top>
+                     <center>
+                        <StackPane BorderPane.alignment="CENTER">
+                           <children>
+                              <AnchorPane id="resultPane" fx:id="tables" visible="false">
+                                 <children>
+                                    <HBox layoutX="9.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane id="inputPane" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                    <ComboBox id="simulationMenu" fx:id="simulationMenuB" layoutX="27.0" layoutY="55.0" prefHeight="32.0" prefWidth="582.0" promptText="%key38" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="-35.0" />
+                                    <ComboBox id="simulationMenu" fx:id="simulationYearB" layoutX="532.0" layoutY="10.0" promptText="%key65" translateX="25.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="-35.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane id="sequencePane" fx:id="simulation">
+                                 <children>
+                                    <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets right="25.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <AnchorPane id="inputPane" VBox.vgrow="ALWAYS">
+                                                   <VBox.margin>
+                                                      <Insets bottom="25.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <VBox alignment="CENTER" layoutX="139.0" layoutY="41.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="30.0">
+                                                         <children>
+                                                            <Button id="getDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#insertDataAction" prefWidth="219.0" text="%key7" VBox.vgrow="ALWAYS">
+                                                               <VBox.margin>
+                                                                  <Insets bottom="20.0" />
+                                                               </VBox.margin></Button>
+                                                            <StackPane>
+                                                               <children>
+                                                                  <Rectangle id="dataShape" fx:id="dataShape" arcHeight="50.0" arcWidth="50.0" cache="true" cacheHint="SPEED" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="208.0" />
+                                                                  <Label id="dataLabel" fx:id="dataLabel" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" prefHeight="42.0" prefWidth="203.0" text="%key8" textAlignment="CENTER" />
+                                                               </children>
+                                                            </StackPane>
+                                                         </children>
+                                                      </VBox>
+                                                      <Text id="textGuide" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" wrappingWidth="31.14453125" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="10.0">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="56.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane id="inputPane" VBox.vgrow="ALWAYS">
+                                                   <children>
+                                                      <VBox alignment="CENTER" fillWidth="false" layoutX="-13.0" layoutY="11.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                                                      <Text id="textGuide" layoutX="-4.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="10.0">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="56.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children></AnchorPane>
+                                             </children>
+                                          </VBox>
+                                          <VBox HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <AnchorPane id="inputPane" VBox.vgrow="ALWAYS">
+                                                   <VBox.margin>
+                                                      <Insets bottom="25.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <VBox alignment="CENTER" fillWidth="false" layoutX="2.0" layoutY="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                                                      <Text id="textGuide" layoutX="-4.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="10.0">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="56.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane id="inputPane" VBox.vgrow="ALWAYS">
+                                                   <children>
+                                                      <VBox alignment="CENTER" layoutX="-26.0" layoutY="-24.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                                                      <Text id="textGuide" layoutX="-7.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="10.0">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="56.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children></AnchorPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <AnchorPane layoutX="766.0" layoutY="434.0" AnchorPane.bottomAnchor="-10.0" AnchorPane.rightAnchor="-14.0">
+                                       <children>
+                                          <Circle id="runButton" fx:id="simulationButtonCircle" layoutX="9.0" onMouseClicked="#runAction" pickOnBounds="true" radius="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ImageView fx:id="playImv" layoutX="16.0" layoutY="13.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="24.0">
+                                             <image>
+                                                <Image url="@images/icons/playButtonWhite.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="okImv" layoutX="22.0" layoutY="24.0" mouseTransparent="true" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/icons/okButtonWhite.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane id="resultPane" fx:id="charts" visible="false">
+                                 <children>
+                                    <HBox layoutX="9.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane id="inputPane" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets right="25.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" layoutX="-94.0" layoutY="-102.0" prefHeight="0.0" prefWidth="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Button id="graphButton" mnemonicParsing="false" onMouseClicked="#changePaneAction" prefHeight="40.0" text="%key22" textAlignment="CENTER">
+                                                         <HBox.margin>
+                                                            <Insets right="20.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                      <Button id="graphButton" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#changePaneAction" prefHeight="40.0" text="%key21" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                                <AnchorPane fx:id="meteorologic" layoutX="-3.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0" />
+                                                <AnchorPane fx:id="development" layoutX="10.0" layoutY="41.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane id="inputPane" prefHeight="100.0" prefWidth="150.0">
+                                             <children>
+                                                <VBox fx:id="developmentLegend" alignment="TOP_CENTER" layoutX="14.0" layoutY="135.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <VBox fx:id="meteorologicLegend" alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children></AnchorPane>
+                                       </children>
+                                    </HBox>
+                                    <ComboBox id="simulationMenu" fx:id="simulationMenuA" layoutX="27.0" layoutY="55.0" prefHeight="32.0" prefWidth="582.0" promptText="%key38" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="-35.0" />
+                                    <ComboBox id="simulationMenu" fx:id="simulationYearA" layoutX="532.0" layoutY="10.0" promptText="%key65" translateX="25.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="-35.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </StackPane>
+                     </center>
+                  </BorderPane>
+                  <AnchorPane fx:id="warningPane" visible="false" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="8.0">
+                     <children>
+                        <Circle id="AlertButton" fx:id="warningButton" cache="true" cacheHint="SCALE" layoutX="9.0" onMouseClicked="#alertTip" pickOnBounds="true" radius="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ImageView layoutX="16.0" layoutY="13.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="19.0">
+                           <image>
+                              <Image url="@images/icons/warning.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</Group>

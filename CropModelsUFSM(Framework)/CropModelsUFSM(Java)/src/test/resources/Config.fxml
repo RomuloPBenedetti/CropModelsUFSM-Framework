@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+
+<Group fx:id="root" stylesheets="@/Gui.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cropModelsUFSM.control.WebPanesFXController">
+   <children>
+      <StackPane id="transparencyBase" fx:id="transparentPane">
+         <children>
+            <AnchorPane id="roundSubPane">
+               <children>
+                  <WebView fx:id="browser" blendMode="SRC_ATOP" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0" />
+                  <AnchorPane id="statusPane" depthTest="ENABLE" onMouseDragged="#moveWindow" onMousePressed="#moveWindowInitialPosition" prefWidth="783.0" snapToPixel="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <StackPane id="windowButton" onMouseClicked="#closeAction" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0">
+                           <children>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../test/resources/images/icons/closeButtonWhite.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </StackPane>
+                        <StackPane id="windowButton" blendMode="ADD" disable="true" onMouseClicked="#maximizeAction" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="7.0">
+                           <children>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../test/resources/images/icons/maximizeButtonWhite.png" />
+                                 </image>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </ImageView>
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </StackPane>
+                        <StackPane id="windowButton" onMouseClicked="#minimizeAction" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="90.0">
+                           <children>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../test/resources/images/icons/minimizerButtonWhite.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </StackPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="MOVE" />
+                     </cursor>
+                     <effect>
+                        <Blend mode="EXCLUSION" opacity="0.53" />
+                     </effect>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <BorderPane fx:id="roundBorderPane" cache="true" cacheHint="SPEED" disable="true" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
+   </children>
+</Group>

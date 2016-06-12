@@ -1,0 +1,33 @@
+apply plugin: 'application'
+
+mainClassName = "cropModelsUFSM.graphic.Gui"
+applicationDefaultJvmArgs = ["-Dprism.text=t2k -Dprism.lcdtext=true -Xms256m"]
+
+sourceCompatibility = 1.8
+version = '0.5'
+
+if (!hasProperty('mainClass')) { ext.mainClass = 'cropModelsUFSM.graphic.Gui' }
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'cropModelsUFSM',
+                'Main-Class': 'cropModelsUFSM.graphic.Gui',
+                'Class-Path': '.',
+                'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://repo.mycompany.com/maven2"
+    }
+}
+
+dependencies { testCompile group: 'junit', name: 'junit', version: '4.+' }
+
+task copyToLib(type: Copy) {
+    into "lib"
+    from configurations.runtime
+}
+build.dependsOn copyToLib

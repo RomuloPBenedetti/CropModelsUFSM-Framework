@@ -1,0 +1,373 @@
+
+* {
+    -fx-color-white-grey: rgb(232, 232, 232);
+    -fx-color-green : #3fa100;
+    -fx-color-green-glow: #b0ff7d;
+    -fx-color-purple: #a54bff;
+    -fx-color-purple-glow: rgb(207, 158, 255);
+}
+
+#border {
+    -fx-padding: 5;
+}
+
+
+/*======================= TRANSPARENT WINDOW ========================*/
+#transparencyBase {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 24, 0, 0, 19);
+    -fx-padding: 50;
+    -fx-pref-width: 850;
+    -fx-pref-height: 650;
+    -fx-min-width: 850;
+    -fx-min-height: 650;
+
+}
+
+/*========================== WINDOW BASE ===========================*/
+
+#base {
+    -fx-background-color: rgb(232, 232, 232);
+    -fx-pref-width: 800;
+    -fx-pref-height: 600;
+    -fx-min-width: 800;
+    -fx-min-height: 600;
+    -fx-background-radius: 10;
+}
+
+#roundSubPane {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 9, 0, 0, 9);
+    -fx-pref-width: 800;
+    -fx-pref-height: 600;
+    -fx-min-width: 800;
+    -fx-min-height: 600;
+    -fx-background-radius: 10;
+}
+
+#transparencyBaseWarning {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 24, 0, 0, 19);
+    -fx-padding: 50;
+    -fx-pref-width: 650;
+    -fx-pref-height: 250;
+    -fx-min-width: 650;
+    -fx-min-height: 250;
+}
+
+#roundSubPaneWarning {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 9, 0, 0, 9);
+    -fx-pref-width: 600;
+    -fx-pref-height: 200;
+    -fx-min-width: 600;
+    -fx-min-height: 200;
+    -fx-background-radius: 10;
+}
+/*=========================== CENTER PANE ===========================*/
+
+#sequencePane {
+    -fx-padding: 25;
+}
+
+#resultPane {
+    -fx-padding: 45 25 25 25;
+}
+
+/*========================= STATUS TOP PANE =========================*/
+
+#statusPane {
+    -fx-pref-height: 30;
+}
+
+/*============================= MENUBAR =============================*/
+
+#menuBar {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-padding: 10 0 0 10;
+    -fx-pref-width: 297;
+    -fx-pref-height: 30;
+}
+
+#menuBar .menu {
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-padding: 4 16 4 16;
+    -fx-background-insets: 0 4 0 4;
+
+}
+
+#menuBar .menu .label {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+
+#menuBar .menu:hover > .label,
+#menuBar .menu .menu-item:hover > .label {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: rgb(165, 75, 255);
+}
+
+#menuBar .menu:pressed > .label,
+#menuBar .menu .menu-item:pressed > .label {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(one-pass-box, white, 9, 0, 0, 0);
+}
+
+#menuBar .menu .menu-item, #menuBar .menu .menu-item:hover,
+#menuBar .menu .menu-item:focused {
+    -fx-padding: 4 16 4 16;
+    -fx-background-insets: 0 4 0 4;
+    -fx-background-color: white;
+    -fx-background-radius: 100;
+}
+
+#menuBar .menu .menu-item > .label {
+    -fx-text-fill: black;
+}
+
+#menuBar .menu .context-menu {
+    -fx-padding: 4 16 4 16;
+    -fx-background-insets: 0 4 0 4;
+    -fx-background-color:transparent;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 9, 0, 0, 9);
+}
+
+.context-menu .context-menu .separator:horizontal {
+    -fx-opacity: 0.0;
+}
+
+/*================== PAINEIS DE ENTRADA DE DADOS ===================*/
+
+#inputPane {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 9, 0, 0, 9);
+}
+
+/*======================== BOTOES DE JANELA ========================*/
+
+#windowButton {
+    -fx-pref-width: 30;
+    -fx-pref-height: 30;
+}
+
+
+/*======================= PAINEL DA ESQUERDA =======================*/
+
+#leftPane {
+    -fx-background-color: rgb(223, 223, 223);
+    -fx-effect: innershadow(one-pass-box, rgba(0, 0, 0, 0.2), 9, 0, 0, 0);
+    -fx-pref-width: 100;
+}
+
+/*======================= RUN BUTTON =======================*/
+
+#runButton {
+    -fx-stroke: rgba(0, 0, 0, 0);
+    -fx-stroke-type: INSIDE;
+    -fx-fill: rgb(165, 75, 255);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.7), 9, 0, 0, 9);
+}
+
+#imageView {
+}
+
+#tableButton {
+    -fx-background-color: rgba(223, 223, 223,0);
+}
+
+#tableButton .text {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 20;
+    -fx-fill: white;
+}
+
+#graphButton {
+    -fx-background-color: rgba(223, 223, 223,0);
+}
+
+#graphButton .text {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 16;
+}
+
+#getDataButton {
+    -fx-background-color: rgba(223, 223, 223,0);
+}
+
+#getDataButton .text {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 16;
+    -fx-text-alignment: center;
+    -fx-fill: black;
+}
+
+#tableButton:hover .text {
+    -fx-fill: rgb(165, 75, 255);
+}
+
+#getDataButton:hover .text, #graphButton:hover .text
+{
+    -fx-fill: grey;
+}
+
+.date-picker.hove {
+    -fx-background-color: grey;
+}
+
+
+#resultTable {
+    -fx-background-color: rgba(223, 223, 223,0);
+}
+
+#dataLabel {
+    -fx-font-family: "Roboto Black";
+    -fx-text-fill: white;
+
+}
+
+#AlertButton {
+    -fx-stroke: rgba(0, 0, 0, 0);
+    -fx-stroke-type: INSIDE;
+    -fx-fill: #D6462F;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.7), 9, 0, 0, 9);
+}
+
+#dataShape {
+    -fx-fill: #D6462F;
+    -fx-stroke: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 3, 0, 0, 3);
+
+}
+
+#textGuide {
+    -fx-fill: rgb(232, 232, 232);
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 9, 0, 0, 9);
+
+}
+
+.combo-box, .text-field{
+    -fx-background-color: white;
+    -fx-border-color: rgb(222, 222, 222) transparent rgb(222, 222, 222) transparent;
+}
+
+.date-picker {
+    -fx-border-color: rgb(222, 222, 222) transparent rgb(222, 222, 222) transparent;
+}
+
+ .date-picker .arrow-button
+ {
+    -fx-border-color: transparent transparent transparent rgb(222, 222, 222);
+ }
+
+.date-picker , .date-picker .arrow-button,
+.date-picker .date-picker-display-node
+{
+    -fx-background-color: white;
+}
+
+.date-picker .date-picker-display-node
+{
+    -fx-highlight-fill: white;
+    -fx-background-color: white;
+}
+
+
+#simulationMenu
+{
+    -fx-background-color: -fx-color-white-grey;
+}
+
+.table-column
+{
+    -fx-alignment: CENTER;
+}
+
+.table-column .text
+{
+    -fx-text-alignment: CENTER;
+}
+
+.column-header-background, .column-header, .show-hide-columns-button {
+    -fx-background-color: rgba(223, 223, 223,0);
+}
+
+.scroll-bar .decrement-button, .scroll-bar .increment-button,
+.scroll-bar:vertical .track, .scroll-bar:vertical .track-background
+{
+  -fx-opacity: 0;
+}
+
+.radio-button .radio, .check-box .box {
+    -fx-background-color: white;
+    -fx-border-width: 1.5;
+    -fx-border-color: rgba(0, 0, 0,0.6);
+    -fx-border-radius: 100;
+
+}
+
+.webView .scroll-bar:horizontal .thumb {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical, .scroll-bar:horizontal, .scroll-bar:vertical,
+.tab-pane:top , .table-view,  .tab-pane,
+.tab-header-background, .tab-container, .tab:top,
+.tab-pane:top .tab-header-area .headers-region .tab:selected:top,
+.hide-thumb .scroll-bar:vertical .thumb, .tab:selected:top,
+.tree-table-view:row-selection .column-header-background .filler
+{
+    -fx-background-color: white;
+}
+
+.scroll-bar:vertical .thumb, .scroll-bar:horizontal .thumb{
+    -fx-background-radius: 50;
+
+}
+
+.label, .radio-button .text,
+.combo-box .list-cell:filled:selected .text,
+.date-picker:editable .date-picker-display-node .text
+{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 16;
+}
+
+#backAxis {
+    -fx-side: right;
+}
+
+#frontDevelopmentChart .chart-title .text {
+    -fx-translate-x: 23.6;
+}
+
+#frontDevelopmentChart .chart-legend {
+    -fx-translate-x: -10;
+}
+
+#backDevelopmentChart .chart-legend {
+    -fx-translate-x: 10;
+}
+
+.chart .chart-content .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart .chart-legend {
+    -fx-background-color: transparent;
+}
+#frontDevelopmentChart .chart-content .plot-content .default-color0.chart-series-line { -fx-stroke: #D6462F; }
+#frontDevelopmentChart .chart-legend .default-color0.chart-line-symbol { -fx-background-color: #D6462F, white; }
+
+#backDevelopmentChart .chart-content .plot-content .default-color0.chart-series-line { -fx-stroke: #43E186; }
+#backDevelopmentChart .chart-legend .default-color0.chart-line-symbol { -fx-background-color: #43E186, white; }
+
+#meteorologicChart .chart-content .plot-content .default-color0.chart-series-line { -fx-stroke: #6392e2; }
+#meteorologicChart .chart-legend .default-color0.chart-line-symbol { -fx-background-color: #6392e2, white; }
+#meteorologicChart .chart-content .plot-content .default-color1.chart-series-line { -fx-stroke: #D6462F; }
+#meteorologicChart .chart-legend .default-color1.chart-line-symbol { -fx-background-color: #D6462F, white; }
+#meteorologicChart .chart-content .plot-content .default-color2.chart-series-line { -fx-stroke: #fff173; }
+#meteorologicChart .chart-legend .default-color2.chart-line-symbol { -fx-background-color: #fff173, white; }
