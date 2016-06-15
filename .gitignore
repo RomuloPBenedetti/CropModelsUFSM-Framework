@@ -18,4 +18,4 @@ Guiold*
 **/*.run
 **/*.exe
 **/results
-**/*log*
+**/*.log
