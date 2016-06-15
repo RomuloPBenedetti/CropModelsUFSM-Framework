@@ -77,12 +77,15 @@ public abstract class SimulationTask extends Task<List<String>, List<Serializabl
             });
             orderOutput();
             storeSimulation();
+            afterTask();
             if(!Thread.currentThread().isInterrupted()) succeeded();
         } catch (Exception e) {
             failed("program failure!");
             logger.log(Level.SEVERE, e.toString(), e);
         }
     }
+
+    protected abstract void afterTask();
 
     /**
      * Write the fortran model commandline input on <b>parameters.txt</b> in
