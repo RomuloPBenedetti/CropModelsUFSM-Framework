@@ -18,4 +18,5 @@ Guiold*
 **/*.run
 **/*.exe
 **/results
-**/*.log
+**/main.iml
+**/*.log*

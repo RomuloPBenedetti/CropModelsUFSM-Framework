@@ -1,9 +1,8 @@
-package phenoglad.task.ConcreteTask;
+package cropModelsUFSM.task.abstractTasks;
 
-import phenoglad.support.Util;
-import phenoglad.task.Task;
-import phenoglad.task.TaskInterfaces.TaskObserver;
-
+import cropModelsUFSM.support.Util;
+import cropModelsUFSM.task.Task;
+import cropModelsUFSM.task.TaskInterfaces.TaskObserver;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -14,9 +13,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.logging.Level;
 
-import static phenoglad.support.Util.logger;
-import static phenoglad.support.Util.loggingFile;
+import static cropModelsUFSM.support.Util.logger;
 
 /**
  *
@@ -31,7 +30,8 @@ public abstract class MeteorologicFileTask extends Task<File,String> {
      * {@link #readFirstDay}
      * {@link #lastDate}
      */
-    private final List<String> data, originalHeader, referenceHeader;
+    public final List<String> data;
+    private final List<String> originalHeader, referenceHeader;
     private Boolean readFirstDay = false;
     private LocalDate lastDate;
 
