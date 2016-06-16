@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.Level;
 
+
 import static cropModelsUFSM.support.Util.logger;
 
 /**
@@ -23,7 +24,6 @@ import static cropModelsUFSM.support.Util.logger;
 public abstract class MeteorologicFileTask extends Task<File,String> {
 
     /**
-     * {@link #logger}
      * {@link #data}
      * {@link #originalHeader}
      * {@link #referenceHeader}
