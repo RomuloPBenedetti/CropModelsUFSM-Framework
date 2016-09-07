@@ -1,10 +1,10 @@
 package cropModelsUFSM.Control;
 
 import cropModelsUFSM.control.GuiController;
-import cropModelsUFSM.data.SerializableSimulation;
-import cropModelsUFSM.data.VisualizableSimulation;
+import cropModelsUFSM.data.task.SerializableSimulation;
+import cropModelsUFSM.data.task.VisualizableSimulation;
 import cropModelsUFSM.task.abstractTasks.MeteorologicFileTask;
-import cropModelsUFSM.task.abstractTasks.SimulationTask;
+import cropModelsUFSM.task.concreteTask.SimulationTask;
 import cropModelsUFSM.task.abstractTasks.VisualizationTask;
 
 import java.io.File;

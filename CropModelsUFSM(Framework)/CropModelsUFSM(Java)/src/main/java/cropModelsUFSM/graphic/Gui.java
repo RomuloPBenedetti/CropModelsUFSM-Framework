@@ -1,5 +1,7 @@
 package cropModelsUFSM.graphic;
 
+import cropModelsUFSM.control.GuiController;
+import cropModelsUFSM.support.Util;
 import javafx.application.Application;
 import javafx.fxml.LoadException;
 import javafx.scene.Group;
@@ -7,30 +9,27 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import cropModelsUFSM.control.GuiController;
-import cropModelsUFSM.support.Util;
 
 import java.util.logging.Level;
 
 import static cropModelsUFSM.support.Util.GuiFxmlLoader;
-import static cropModelsUFSM.support.Util.loader;
 import static cropModelsUFSM.support.Util.logger;
 
 /**
  *  Starting point for the application, it initializes the interface and load what is
  *  necessary for runing the program
  *
- * @author romulo
+ * @author romulo Pulcinelli Benedetti
  * @see cropModelsUFSM
  */
 public class Gui extends Application {
 
     /** The scene is the background for all user interface elements, stored on a stage.*/
     private Scene scene;
-    
+
     /** Most external UI element in the FXML structured user interface.*/
     private Group group;
-    
+
     /** The interface controller, responsible for treating events triggered by user, fill
      * UI elements, delegate tasks.*/
     private GuiController controller;
@@ -86,6 +85,10 @@ public class Gui extends Application {
         launch();
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main (String[] args){
         loadCropModelsUfsm();
     }

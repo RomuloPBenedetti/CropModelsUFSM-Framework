@@ -1,45 +1,32 @@
 package cropModelsUFSM.task.abstractTasks;
 
-import cropModelsUFSM.data.SerializableSimulation;
-import cropModelsUFSM.data.VisualizableSimulation;
+import cropModelsUFSM.data.task.SerializableSimulation;
+import cropModelsUFSM.data.task.SimulationInput;
+import cropModelsUFSM.data.task.VisualizableSimulation;
 import cropModelsUFSM.task.Task;
-import cropModelsUFSM.task.TaskInterfaces.TaskObserver;
-
-import java.util.logging.Level;
-
-import static cropModelsUFSM.support.Util.logger;
+import cropModelsUFSM.task.taskInterfaces.TaskObserver;
 
 /**
- * <pre>
- * VisualizationTask is a {@link Task} that receives a {@link SerializableSimulation} and
- * process it so it can fit in a {@link VisualizationTask} that contain the needed JavaFX
- * elements.
- * </pre>
+ *
+ * VisualizationTask é uma {@link Task} que recebe uma {@link SerializableSimulation} e processa de forma a obter uma
+ * {@link VisualizableSimulation} que contem os componentes visíveis tais como tabelas e gráficos, componentes JavaFX.
  *
  * @author romulo Pulcinelli Benedetti
- * @see phenoglad
+ * @see cropModelsUFSM
  */
+public abstract class VisualizationTask extends Task<SerializableSimulation,VisualizableSimulation> {
 
-// TODO VisualizationTask :
-
-public abstract class VisualizationTask
-        extends Task<SerializableSimulation,VisualizableSimulation> {
-
-    public VisualizationTask(SerializableSimulation input, TaskObserver listener)
+    /**
+     * Cria a tarefa de simulação, são recebidos o input e o observer da tarefa. Também é alocada uma
+     * {@link java.util.Collections.SynchronizedList} segura para paralelização dos anos de simulação.
+     *
+     * @param input um {@link SimulationInput}, a entrada da tarefa de simulação.
+     * @param observer Observador esperando {@link #failed(String)} ou {@link #succeeded()}, eventos que essa tarefa
+     *                 pode gerar.
+     */
+    public VisualizationTask(SerializableSimulation input, TaskObserver observer)
     {
-        super(input, listener);
+        super(input, observer);
         setOutput(new VisualizableSimulation());
     }
-
-    @Override
-    public void run() {
-        try {
-            taskWork();
-            if(!Thread.currentThread().isInterrupted()) succeeded();
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.toString(), e);
-        }
-    }
-
-    protected abstract void taskWork();
 }

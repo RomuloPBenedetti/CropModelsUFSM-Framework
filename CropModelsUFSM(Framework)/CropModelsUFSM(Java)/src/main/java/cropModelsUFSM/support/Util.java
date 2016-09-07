@@ -1,11 +1,13 @@
 package cropModelsUFSM.support;
 
+import cropModelsUFSM.data.task.SimulationInput;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
+import javafx.scene.text.Font;
+
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.attribute.PosixFilePermission;
-import java.security.CodeSource;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
@@ -19,14 +21,21 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 import java.util.zip.ZipFile;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
-import javafx.scene.text.Font;
 
+/**
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
+ */
 public abstract class Util {
 
+    /**
+     *
+     */
     public static final String s = File.separator;
 
+    /**
+     *
+     */
     private static final List<String> fontsString =
         new ArrayList<>( Arrays.asList(new String[]{
                 "fonts/Roboto-Thin.ttf",
@@ -37,15 +46,24 @@ public abstract class Util {
     ));
     public static List<InputStream> fonts = new ArrayList<>();
 
+    /**
+     *
+     */
     public static final String loggingFile = "logfile.log";
     public static final Logger logger= Logger.getLogger(Util.class.getName());
 
+    /**
+     *
+     */
     private static final String cssString ="Gui.css";
     private static final String fxmlString = "Gui.fxml";
     private static final String helpFxmlString = "WebPane.fxml";
     private static final String warningFxmlString = "Warning.fxml";
     private static final String configFxmlString = "Config.fxml";
 
+    /**
+     *
+     */
     public static final ClassLoader loader = Util.class.getClassLoader();
     public static final FXMLLoader GuiFxmlLoader = new FXMLLoader();
     public static final FXMLLoader HelpFxmlLoader = new FXMLLoader();
@@ -56,21 +74,33 @@ public abstract class Util {
     public static InputStream fxml, helpFxml, configFxml, warningFxml,
     legendFxml, aboutFxml, css;
 
+    /**
+     *
+     */
     public static List<String> imagesString;
     public static List<InputStream> images = new ArrayList<>();
     private static final String iconString = "images/icons/icon.png";
     public static Image icon ;
 
+    /**
+     *
+     */
     private static final Locale ptBR = new Locale("pt", "BR");
     private static final ResourceBundle pt = ResourceBundle.getBundle("Gui_pt", ptBR);
     public static final ResourceBundle en =  ResourceBundle.getBundle("Gui_en");
     public static ResourceBundle rb;
 
+    /**
+     *
+     */
     public static FileHandler fileHandler;
     public static final String ioFolder = "files";
     public static final String meteorologicFile = "files"+s+"meteorologicFile.txt";
     public static final String resultFolderpath = "results";
 
+    /**
+     *
+     */
     public static final String helpHtml_EN = "help/EN/help.xhtml";
     public static final String helpHtml_PT = "help/PT/help.xhtml";
     public static final String aboutHtml_EN = "about/EN/about.xhtml";
@@ -78,19 +108,29 @@ public abstract class Util {
     public static final String legendHtml_EN = "legend/EN/legend.xhtml";
     public static final String legendHtml_PT = "legend/PT/legend.xhtml";
 
+    /**
+     *
+     */
     public static ZipFile zip;
     public static String currentJarPath;
 
+    /**
+     *
+     */
     public static String winString, nixString;
     private static InputStream winIn, nixIn;
 
+    /**
+     *
+     */
     public static UtilVirtualMethods virtualSimulationNameMethodObject;
 
+    /**
+     *
+     */
     public static void loadRessources()
     {
-
         resourcesLogging();
-
         try{
             zip = new ZipFile(new File(currentJarPath));
             imagesString.forEach(i -> images.add(getISFromZip(i)));
@@ -105,8 +145,6 @@ public abstract class Util {
             css = getISFromZip(cssString);
             winIn = getISFromZip(winString);
             nixIn = getISFromZip(nixString);
-
-
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally
@@ -134,6 +172,9 @@ public abstract class Util {
         loadLogger();
     }
 
+    /**
+     *
+     */
     private static void resourcesLogging() {
         if(imagesString == null){
             logger.log(Level.SEVERE, "CropModelsUFSM -> No animation image list, " +
@@ -150,6 +191,9 @@ public abstract class Util {
         }
     }
 
+    /**
+     *
+     */
     private static void loadExecutables() {
         FileOutputStream nixOut, winOut;
 
@@ -173,7 +217,6 @@ public abstract class Util {
                     winOut.write(bytes, 0, read);
                 }
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -181,11 +224,17 @@ public abstract class Util {
         }
     }
 
+    /**
+     *
+     */
     public static void unloadExecutables(){
         (new File (nixString)).delete();
         (new File (winString)).delete();
     }
 
+    /**
+     *
+     */
     public static void loadLocale ()
     {
         if (Locale.getDefault().getLanguage().equals("en")) {
@@ -194,11 +243,19 @@ public abstract class Util {
         else { GuiFxmlLoader.setResources(pt); rb = pt; }
     }
 
+    /**
+     *
+     */
     public static void loadFonts ()
     {
         fonts.forEach(f -> Font.loadFont(f, 15));
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     private static InputStream getISFromZip (String name)
     {
         try
@@ -211,6 +268,9 @@ public abstract class Util {
         return null;
     }
 
+    /**
+     *
+     */
     private static void loadLogger() {
         try {
             fileHandler = new FileHandler(loggingFile,true);
@@ -221,11 +281,19 @@ public abstract class Util {
         }
     }
 
+    /**
+     *
+     */
     public static void unloadLogger()
     {
         fileHandler.close();
     }
 
+    /**
+     *
+     * @param parameters
+     * @return
+     */
     public static String[] fortranModelCommand(String parameters)
     {
         String OS = System.getProperty("os.name").toLowerCase();
@@ -240,6 +308,12 @@ public abstract class Util {
         }
     }
 
+    /**
+     *
+     * @param dayOfYear
+     * @param year
+     * @return
+     */
     public static LocalDate getDate (Long dayOfYear, Long year){
         Map<TemporalField, Long> dayOfYear_Year_date = new HashMap<>();
         dayOfYear_Year_date.put(ChronoField.DAY_OF_YEAR, dayOfYear);
@@ -248,24 +322,51 @@ public abstract class Util {
             resolveDate(dayOfYear_Year_date, ResolverStyle.SMART);
     }
 
+    /**
+     *
+     * @param date
+     * @return
+     */
     public static LocalDate StringToDate (String date){
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d MMM uuuu");
         return LocalDate.parse(date, dateFormat);
     }
 
+    /**
+     *
+     * @param date
+     * @return
+     */
     public static String dateToString (LocalDate date){
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d MMM uuuu");
         return date.format(dateFormat);
     }
 
+    /**
+     *
+     * @param dayOfYear
+     * @param year
+     * @return
+     */
     public static String dateToString (Long dayOfYear, Long year){
         return dateToString(getDate(dayOfYear,year));
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public static String getText (Integer key){
         return rb.getString("key"+String.valueOf(key));
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static List<String> readAfile (File file) throws IOException {
         LineNumberReader fileReader;
         fileReader = new LineNumberReader(new FileReader(file));
@@ -274,6 +375,12 @@ public abstract class Util {
         return lines;
     }
 
+    /**
+     *
+     * @param file
+     * @param data
+     * @throws IOException
+     */
     public static void writeAfile (File file, List<String> data) throws IOException {
         FileWriter writer;
         writer = new FileWriter(file);
@@ -282,18 +389,28 @@ public abstract class Util {
         writer.close();
     }
 
+    /**
+     *
+     */
     public static void createFilesFolder(){
         File IOfolder = new File(Util.ioFolder);
         if (!IOfolder.exists() || !IOfolder.isDirectory())
             IOfolder.mkdir();
     }
 
+    /**
+     *
+     */
     public static void createResultsFolder() {
         File IOfolder = new File(Util.resultFolderpath);
         if (!IOfolder.exists() || !IOfolder.isDirectory())
             IOfolder.mkdir();
     }
 
+    /**
+     *
+     * @param path
+     */
     public static void DeleteDirectory(File path) {
         if (path.exists()) {
             for (File d : path.listFiles()) {
@@ -305,7 +422,12 @@ public abstract class Util {
         }
     }
 
-    public static String generateSimulationName(List<String> input) {
+    /**
+     *
+     * @param input
+     * @return
+     */
+    public static String generateSimulationName(SimulationInput input) {
         return virtualSimulationNameMethodObject.generateSimulationName(input);
     }
 

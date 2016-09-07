@@ -8,10 +8,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
-
+/**
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
+ */
 public class AnimationEvents {
 
-
+    /**
+     *
+     * @param duration
+     * @param scycles
+     * @param node
+     * @param from
+     * @param to
+     */
     public static void fade (Duration duration, int scycles, Node node,
                              double from, double to)
     {
@@ -23,13 +33,30 @@ public class AnimationEvents {
         fade.play();
     }
 
+    /**
+     *
+     * @param duration
+     * @param scycles
+     * @param node
+     * @param x
+     * @param y
+     */
     public static void move (Duration duration, int scycles, Node node,
                               double x, double y)
     {
 
     }
 
-
+    /**
+     *
+     * @param seconds
+     * @param scycles
+     * @param label
+     * @param dataShape
+     * @param from
+     * @param to
+     * @param text
+     */
     public static void setDataRange (Duration seconds, int scycles, Label label,
                                      Shape dataShape, Color from, Color to,
                                      String text) {
@@ -44,8 +71,17 @@ public class AnimationEvents {
         fade(seconds, scycles, label, 0, 1);
     }
 
+    /**
+     *
+     */
     private static FillTransition reFill;
 
+    /**
+     *
+     * @param dataShape
+     * @param from
+     * @param to
+     */
     public static void setWarning (Shape dataShape, Color from, Color to) {
         if (reFill == null) reFill =new FillTransition(Duration.seconds(1),
                                 dataShape, from, to);
@@ -76,6 +112,14 @@ public class AnimationEvents {
         }
     }
 
+    /**
+     *
+     * @param dataShape
+     * @param okImv
+     * @param playImv
+     * @param from
+     * @param to
+     */
     public static void simulationSucess (Shape dataShape, ImageView okImv,
                                          ImageView playImv, Color from,
                                          Color to){

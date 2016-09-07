@@ -1,5 +1,6 @@
 package cropModelsUFSM.control;
 
+import cropModelsUFSM.task.TaskController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,36 +12,55 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import cropModelsUFSM.task.TaskController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
+ */
 public abstract class GenericFXController implements Initializable {
 
+    /**
+     *
+     */
     @FXML private Group root;
     @FXML private StackPane transparentPane;
     @FXML private BorderPane roundBorderPane;
 
-
+    /**
+     *
+     */
     protected Double initX, initY, maxWidth, maxHeight;
     protected final Double minWidth = 800.0 , minHeight = 600.0;
     protected Rectangle2D primaryScreenBounds;
     protected Stage stage;
 
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initX = 0.0;
         initY = 0.0;
     }
 
+    /**
+     *
+     * @param stage
+     */
     public void postInitializeTasks (Stage stage){
         primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         windowsLimitsInitialization();
         this.stage = stage;
     }
 
+    /**
+     *
+     */
     public void windowsLimitsInitialization ()
     {
         maxWidth = primaryScreenBounds.getWidth();
@@ -57,18 +77,30 @@ public abstract class GenericFXController implements Initializable {
      **************************************************************************/
 
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void closeAction (MouseEvent event) {
         stage.close();
         TaskController.finalizeTaskPool();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void closeAction (Event event) {
         stage.close();
         TaskController.finalizeTaskPool();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     protected void maximizeAction (MouseEvent event){
         String style = "fx-background-color: rgb(232, 232, 232);";
@@ -98,11 +130,19 @@ public abstract class GenericFXController implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void minimizeAction (MouseEvent event){
         stage.setIconified(true);
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void resizeEvent (MouseEvent event) {
         if((event.getScreenX() < stage.getX()+31) &&
@@ -113,13 +153,20 @@ public abstract class GenericFXController implements Initializable {
             stage.getScene().setCursor(Cursor.DEFAULT);
     }
 
-
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void moveWindowInitialPosition (MouseEvent event) {
         initX = (stage.getX() - event.getScreenX());
         initY = (stage.getY() - event.getScreenY());
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void moveWindow (MouseEvent event) {
         stage.setX(event.getScreenX() + initX);

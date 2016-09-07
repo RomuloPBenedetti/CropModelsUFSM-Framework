@@ -14,8 +14,8 @@ import java.util.List;
  * or written as plain text given an adequated separator.
  * </pre>
  *
- * @author romulo
- * @see phenoglad
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
  */
 public final class Table extends ArrayList<Column> implements Serializable {
 
@@ -26,7 +26,7 @@ public final class Table extends ArrayList<Column> implements Serializable {
      * @param lines A list of data lines, each line should contain sufficient elements so it
      *              can fill all columns.
      */
-    Table(List<String> headers , List<List<String>> lines)
+    public Table(List<String> headers, List<List<String>> lines)
     {
         for(int i=0 ; i< headers.size(); i++){
             this.add(new Column(headers.get(i)));
