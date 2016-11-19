@@ -1,4 +1,1 @@
-include 'SimulArroz', 'SimulArroz:SimulArroz(Java)'
-include 'Simanihot', 'Simanihot:Simanihot(Java)'
-include 'PhenoGlad', 'PhenoGlad:PhenoGlad(Java)'
-include 'CropModelsUFSM(Framework)', 'CropModelsUFSM(Framework):CropModelsUFSM(Java)'
+include CropModelsUFSM(Java)'
