@@ -17,14 +17,14 @@ jar {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url "http://repo.mycompany.com/maven2"
-    }
-}
-
-dependencies { testCompile group: 'junit', name: 'junit', version: '4.+' }
+//repositories {
+//    mavenCentral()
+//    maven {
+//        url "http://repo.mycompany.com/maven2"
+//    }
+//}
+//
+//dependencies { testCompile group: 'junit', name: 'junit', version: '4.+' }
 
 task copyToLib(type: Copy) {
     into "lib"
