@@ -3,8 +3,8 @@ package cropModelsUFSM.task.taskInterfaces;
 import cropModelsUFSM.task.Task;
 
 /**
- * Interface que deve ser implementada pelos observadores de {@link Task}. As tarefas inform seu estado aos observadores
- * por meio destes métodos, permitindo a execução assincrona de tarefas sem recorrer a bloqueios.
+ * Interface que deve ser implementada pelos observadores de {@link Task}. As tarefas informam seu estado aos
+ * observadores por meio destes métodos, permitindo a execução assincrona de tarefas, sem recorrer a bloqueios.
  *
  * @author romulo Pulcinelli Benedetti
  * @see cropModelsUFSM

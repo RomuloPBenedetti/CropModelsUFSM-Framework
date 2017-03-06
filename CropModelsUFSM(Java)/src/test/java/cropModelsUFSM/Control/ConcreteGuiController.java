@@ -2,13 +2,13 @@ package cropModelsUFSM.Control;
 
 import cropModelsUFSM.control.GuiController;
 import cropModelsUFSM.data.task.SerializableSimulation;
+import cropModelsUFSM.data.task.SimulationInput;
 import cropModelsUFSM.data.task.VisualizableSimulation;
 import cropModelsUFSM.task.abstractTasks.MeteorologicFileTask;
-import cropModelsUFSM.task.concreteTask.SimulationTask;
+import cropModelsUFSM.task.abstractTasks.SimulationTask;
 import cropModelsUFSM.task.abstractTasks.VisualizationTask;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Created by romulo on 11/06/16.
@@ -25,7 +25,7 @@ public class ConcreteGuiController extends GuiController {
     }
 
     @Override
-    protected SimulationTask newSimulationTask(List<String> input, GuiController guiController) {
+    protected SimulationTask newSimulationTask(SimulationInput input, GuiController guiController) {
         return null;
     }
 
@@ -45,7 +45,7 @@ public class ConcreteGuiController extends GuiController {
     }
 
     @Override
-    protected List<String> getSimulationInput() {
+    protected SimulationInput getSimulationInput() {
         return null;
     }
 }

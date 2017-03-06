@@ -1,4 +1,4 @@
-package cropModelsUFSM.task.concreteTask;
+package cropModelsUFSM.task.abstractTasks;
 
 import cropModelsUFSM.data.task.FortranInput;
 import cropModelsUFSM.data.task.SerializableSimulation;
@@ -7,10 +7,7 @@ import cropModelsUFSM.support.Util;
 import cropModelsUFSM.task.Task;
 import cropModelsUFSM.task.taskInterfaces.TaskObserver;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ import static cropModelsUFSM.support.Util.*;
  * @author romulo Pulcinelli Benedetti
  * @see cropModelsUFSM
  */
-public class SimulationTask extends Task<SimulationInput, List<SerializableSimulation>> {
+public abstract class SimulationTask extends Task<SimulationInput, List<SerializableSimulation>> {
 
     /**
      * Cria a tarefa de simulação, são recebidos o input e o observer da tarefa. Também é alocada uma
@@ -91,6 +88,27 @@ public class SimulationTask extends Task<SimulationInput, List<SerializableSimul
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
 
+        String line;
+        BufferedReader error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        while((line = error.readLine()) != null){
+            System.out.println(line);
+        }
+        error.close();
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        while((line=input.readLine()) != null){
+            System.out.println(line);
+        }
+
+        input.close();
+
+        OutputStream outputStream = process.getOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        printStream.println();
+        printStream.flush();
+        printStream.close();
+
+
         List<String> result = Util.readAfile(new File(outputPathName));
         result.set(0, Util.getText(104));
 
@@ -103,7 +121,7 @@ public class SimulationTask extends Task<SimulationInput, List<SerializableSimul
     private void orderOutput() {
         Comparator<SerializableSimulation> simulationComparator =
                 (first, second) -> first.getYear().compareTo(second.getYear());
-        Collections.sort(getOutput(), simulationComparator);
+        (getOutput()).sort(simulationComparator);
     }
 
     /**

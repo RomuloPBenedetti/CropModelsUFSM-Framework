@@ -1,48 +1,30 @@
 package cropModelsUFSM.data.task;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
  * @author romulo Pulcinelli Benedetti
  * @see cropModelsUFSM
  */
-public interface FortranInput extends Serializable {
+public class FortranInput implements Serializable {
 
-    /**
-     *
-     * @return
-     */
-    List<String> getInputList();
+    List<String> inputList;
+    Integer year;
 
-    /**
-     *
-     * @return
-     */
-    String getInput();
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
-    /**
-     *
-     * @return
-     */
-    Integer getYear();
+    public void setInputList(List<String> inputList) {
+        this.inputList = inputList;
+    }
 
-    /**
-     *
-     * @return
-     */
-    LocalDate getPlantingDate();
+    public Integer getYear() {
+        return year;
+    }
 
-    /**
-     *
-     * @return
-     */
-    Integer getCultivarType();
-
-    /**
-     *
-     * @return
-     */
-    Integer getCultivar();
+    public List<String> getInputList() {
+        return inputList;
+    }
 }
