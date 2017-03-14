@@ -460,6 +460,7 @@ public abstract class GuiController
      */
     private static void showWarning (String warning)
     {
+        System.out.println(warning);
         warningStage = warn(warningStage, Util.WarningFxmlLoader, Util.warningFxml,
                     "cropModelsUFSM Manual", warning);
     }

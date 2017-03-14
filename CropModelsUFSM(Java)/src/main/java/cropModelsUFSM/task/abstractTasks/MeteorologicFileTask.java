@@ -50,7 +50,9 @@ public abstract class MeteorologicFileTask extends Task<File,String> {
         readMeteorologicData();
         validateHeader();
         validateData();
-        getRangeAndStore();
+        if(!Thread.currentThread().isInterrupted()) {
+            getRangeAndStore();
+        }
     }
 
     /**

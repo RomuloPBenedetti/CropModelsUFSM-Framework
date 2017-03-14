@@ -56,16 +56,18 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
     @Override
     protected void onExecution() throws Exception {
         validateInput();
-        getInput().getFortranInputs().parallelStream().forEach(fortranInput -> {
-            try {
-                executeModel(fortranInput);
-            } catch (IOException | InterruptedException e) {
-                failed("Severe failure, interruption in model execution.");
-                logger.log(Level.SEVERE, e.toString(), e);
-            }
-        });
-        orderOutput();
-        storeSimulation();
+        if(!Thread.currentThread().isInterrupted()) {
+            getInput().getFortranInputs().parallelStream().forEach(fortranInput -> {
+                try {
+                    executeModel(fortranInput);
+                } catch (IOException | InterruptedException e) {
+                    failed("Severe failure, interruption in model execution.");
+                    logger.log(Level.SEVERE, e.toString(), e);
+                }
+            });
+            orderOutput();
+            storeSimulation();
+        }
     }
 
     /**
