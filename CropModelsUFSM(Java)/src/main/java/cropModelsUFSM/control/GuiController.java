@@ -1,6 +1,7 @@
 package cropModelsUFSM.control;
 
 import cropModelsUFSM.data.task.SerializableSimulation;
+import cropModelsUFSM.data.task.SimulationInput;
 import cropModelsUFSM.data.task.VisualizableSimulation;
 import cropModelsUFSM.graphic.AnimationEvents;
 import cropModelsUFSM.graphic.ImageAnimation;
@@ -9,7 +10,7 @@ import cropModelsUFSM.task.concreteTask.UnserializeSimulationTask;
 import cropModelsUFSM.task.Task;
 import cropModelsUFSM.task.taskInterfaces.TaskObserver;
 import cropModelsUFSM.task.abstractTasks.MeteorologicFileTask;
-import cropModelsUFSM.task.concreteTask.SimulationTask;
+import cropModelsUFSM.task.abstractTasks.SimulationTask;
 import cropModelsUFSM.task.abstractTasks.VisualizationTask;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -196,7 +197,7 @@ public abstract class GuiController
      * @return
      */
     protected abstract SimulationTask
-    newSimulationTask(List<String> input, GuiController guiController);
+    newSimulationTask(SimulationInput input, GuiController guiController);
 
     /**
      *
@@ -459,6 +460,7 @@ public abstract class GuiController
      */
     private static void showWarning (String warning)
     {
+        System.out.println(warning);
         warningStage = warn(warningStage, Util.WarningFxmlLoader, Util.warningFxml,
                     "cropModelsUFSM Manual", warning);
     }
@@ -584,7 +586,7 @@ public abstract class GuiController
      *
      * @return
      */
-    protected abstract List<String> getSimulationInput();
+    protected abstract SimulationInput getSimulationInput();
 
     /**
      *

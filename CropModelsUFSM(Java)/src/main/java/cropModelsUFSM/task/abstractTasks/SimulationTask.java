@@ -1,14 +1,15 @@
 package cropModelsUFSM.task.abstractTasks;
 
-import cropModelsUFSM.data.SerializableSimulation;
+import cropModelsUFSM.data.task.FortranInput;
+import cropModelsUFSM.data.task.SerializableSimulation;
+import cropModelsUFSM.data.task.SimulationInput;
 import cropModelsUFSM.support.Util;
 import cropModelsUFSM.task.Task;
-import cropModelsUFSM.task.TaskInterfaces.TaskObserver;
+import cropModelsUFSM.task.taskInterfaces.TaskObserver;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,120 +19,121 @@ import java.util.logging.Level;
 import static cropModelsUFSM.support.Util.*;
 
 /**
- * <pre>
- * SimulationTask Is a {@link Task} that will execute a simulation. It receives a
- * {@link java.awt.List<String>} as {@link #input} and produce an
- * {@link java.awt.List<SerializableSimulation>} as {@link #output}.
- *
- * It will parallelize the simulation if {@link #modelInputList()} return a list bigger than
- * one. Finally, the result will be categorized, serialized and stored on <b>results\%FOLDER%</b>
- * at the program's root directory, the <b>%FOLDER%</b> is generated with the simulation input,
- * by {@link Util#generateSimulationName(List)}.
-
- * You should do the adequate input validation
- * </pre>
+ * SimulationTask é uma {@link Task} especializada na execução de simulações para modelos dentro dos padrões
+ * que atualmente estão definidos em {@link SimulationInput}. Você deve fazer a adequada validação da entrada no
+ * método {@link #validateInput()} a fim de garantir uma simulação adequada de acordo com as necessidades do modelo.
+ * <p>
+ * Esta tarefa recebe {@link SimulationInput} como ({@link #input}) e produz uma
+ * {@link java.awt.List<SerializableSimulation>} como saída ({@link #output}).
+ * <p>
+ * Esta classe ira paralelizar a simulação se {@link SimulationInput#getFortranInputs()} retornar uma lista maior que
+ * um, resultados serão ordenados pelos anos, armazenados em uma pasta <b>results\%FOLDER%</b> no diretório raiz do
+ * programa. A pasta <b>%FOLDER%</b> é gerada com base na entrada da simulação ({@link #input}) pelo método
+ * {@link Util#generateSimulationName(SimulationInput)}.
  *
  * @author romulo Pulcinelli Benedetti
  * @see cropModelsUFSM
  */
-
-// TODO SimulationTask :
-// 1. validate input exptensively, each input limit, ensure even cast type validation. Remember
-//    exceptions are for #NON EXPECTED FAILURES#, not expected failures...
-// 2. translate model output file header, acordingly with the locale
-// 3. do some more extensive exception treatment
-// 4. Do more extensive logging
-
-public abstract class SimulationTask extends Task<List<String>, List<SerializableSimulation>> {
-
-    private volatile List<String> exceptionalR2 = Collections.synchronizedList(new ArrayList<>());
+public abstract class SimulationTask extends Task<SimulationInput, List<SerializableSimulation>> {
 
     /**
-     * Create a simulation task, adding its input and binding an observer to it.
-     * @param input an {@link java.awt.List<String>}, the simulation task input.
-     * @param observer Object observing the {@link #failed(String)} or {@link #succeeded()}
-     *                 events of this task.
+     * Cria a tarefa de simulação, são recebidos o input e o observer da tarefa. Também é alocada uma
+     * {@link java.util.Collections.SynchronizedList} segura para paralelização dos anos de simulação.
+     *
+     * @param input    um {@link SimulationInput}, a entrada da tarefa de simulação.
+     * @param observer Observador esperando {@link #failed(String)} ou {@link #succeeded()}, eventos que essa tarefa
+     *                 pode gerar.
      */
-    public SimulationTask(List<String> input, TaskObserver observer)
-    {
+    public SimulationTask(SimulationInput input, TaskObserver observer) {
         super(input, observer);
         setOutput(Collections.synchronizedList(new ArrayList<>()));
     }
 
     /**
-     * Method executed by the task thread when {@link #execute()} is called. If any  exception
-     * is detected the task will be terminated and will not {@link #succeeded()}.
+     * metodo chamado por {@link Task#run()} durante a execução para realizar a tarefa. caso
+     * {@link SimulationInput#getFortranInputs()} contenha mais de um imput, a tarefa é paralelizada em um stream.
      */
     @Override
-    public void run()
-    {
-        try {
-            validateInput();
-            modelInputList().parallelStream().forEach(simulationYearInput -> {
+    protected void onExecution() throws Exception {
+        validateInput();
+        if(!Thread.currentThread().isInterrupted()) {
+            getInput().getFortranInputs().parallelStream().forEach(fortranInput -> {
                 try {
-                    executeModel(simulationYearInput);
+                    executeModel(fortranInput);
                 } catch (IOException | InterruptedException e) {
-                    failed("program failure!");
+                    failed("Severe failure, interruption in model execution.");
                     logger.log(Level.SEVERE, e.toString(), e);
                 }
             });
             orderOutput();
             storeSimulation();
-            afterTask();
-            if(!Thread.currentThread().isInterrupted()) succeeded();
-        } catch (Exception e) {
-            failed("program failure!");
-            logger.log(Level.SEVERE, e.toString(), e);
         }
     }
 
-    protected abstract void afterTask();
-
     /**
-     * Write the fortran model commandline input on <b>parameters.txt</b> in
-     * {@link Util#ioFolder} executing the model with it's input redirected to it, reading and
-     * storing the result in a {@link SerializableSimulation}.
+     * Escreve os parametros no arquivo <b>parameters.txt</b> na pasta {@link Util#ioFolder}, executando o modelo com
+     * a entrada redirecionada para este arquivo, posteriormente lendo os resultados do modelo para um
+     * {@link SerializableSimulation}.
      *
-     * @param simulationYearInput A list of input lists compatible with the current used
-     *                            <b>mathematic model</b> generated with base on the <b>number
-     *                            of years to simulate</b>.
-     * @throws IOException If can't create or access needed file resources.
-     * @throws InterruptedException if the current thread is interrupted by another thread
-     *                              while it is waiting, then the wait is ended and an
-     *                              InterruptedException is thrown.
+     * @param fortranInput entrada para um modelo matemático fortran.
+     * @throws IOException          caso algum dos dos arquivos necessários não possa ser criado/aberto.
+     * @throws InterruptedException caso a execução do modelo seja interrompida durante a espera pela execução.
      */
-    private void executeModel (List<String> simulationYearInput)
-            throws IOException, InterruptedException
-    {
-        String year = getExecutionYear(simulationYearInput);
+    private void executeModel(FortranInput fortranInput)
+            throws IOException, InterruptedException {
+        Integer year = fortranInput.getYear();
         String inputPathName = ioFolder + s + year + "parameters.txt";
         String outputPathName = ioFolder + s + year + "result.txt";
-        Util.writeAfile(new File(inputPathName),simulationYearInput);
+        Util.writeAfile(new File(inputPathName), fortranInput.getInputList());
 
         String[] command = Util.fortranModelCommand(inputPathName);
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
 
+        String line;
+        BufferedReader error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        while((line = error.readLine()) != null){
+            System.out.println(line);
+        }
+        error.close();
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        while((line=input.readLine()) != null){
+            System.out.println(line);
+        }
+
+        input.close();
+
+        OutputStream outputStream = process.getOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        printStream.println();
+        printStream.flush();
+        printStream.close();
+
+
         List<String> result = Util.readAfile(new File(outputPathName));
         result.set(0, Util.getText(104));
 
-        getOutput().add(new SerializableSimulation(result, executionNewInputList(getInput())));
+        getOutput().add(new SerializableSimulation(result, getInput(), year));
     }
-
-    private void orderOutput()
-    {
-        Comparator<SerializableSimulation> simulationComparator =
-                (first, second) ->
-                        first.getParameter().get(ParameterComparatorIndex()).
-                        compareTo(second.getParameter().get(ParameterComparatorIndex()));
-        Collections.sort(getOutput(), simulationComparator);
-    }
-
 
     /**
-     * Create directory structure to organize and store simulation, moving result, parameters
-     * an serialized simulation.
-     * @throws Exception if it cant access resources to serialize the simulation data.
+     * Ordena as {@link SerializableSimulation} de acordo com {@link SerializableSimulation#getYear()}.
+     */
+    private void orderOutput() {
+        Comparator<SerializableSimulation> simulationComparator =
+                (first, second) -> first.getYear().compareTo(second.getYear());
+        (getOutput()).sort(simulationComparator);
+    }
+
+    /**
+     * Cria a hierarquia de diretórios para armazenar e organizar as simulações, movendo resultados e parametros assim
+     * como traduzindo o cabeçalho dos resultados dependendo do locale. Ao final chama
+     * {@link #serializeSimulation(String)} para armazenar uma versão serializada da simulação, com o objetivo de tornar
+     * a navegação entre as simulações mais rápida ao permitir que os dados sejam passados diretamente para a tarefa de
+     * visualização.
+     *
+     * @throws Exception se não conseguir mover os arquivos ou criar o arquivo de serialização.
      */
     private void storeSimulation() throws Exception {
         String simulationName = Util.generateSimulationName(getInput());
@@ -143,47 +145,44 @@ public abstract class SimulationTask extends Task<List<String>, List<Serializabl
         simulationPath.mkdir();
 
         for (File f : new File(ioFolder).listFiles()) {
-            if(f.getName().contains("result"))
-                f.renameTo(new File(simulationPath.getPath() + s + f.getName()));
-            if(f.getName().contains("parameters"))
+            if (f.getName().contains("result")) {
+                Path newPath = new File(simulationPath.getPath() + s + f.getName()).toPath();
+                Files.move(f.toPath(), newPath);
+                List<String> fileContent = new ArrayList<>(Files.readAllLines(newPath));
+                fileContent.set(0, Util.getText(104));
+                Files.write(newPath, fileContent);
+            }
+            if (f.getName().contains("parameters"))
                 f.renameTo(new File(simulationPath.getPath() + s + f.getName()));
         }
 
         serializeSimulation(simulationPathString);
     }
 
-    /** Serialize the task {@link #output}, a {@link java.awt.List<SerializableSimulation>}
-     * and store it on the given simulation path.
-     * @param path Path where the serialized simulation should be stored.
-     * @throws Exception If it cant find the path, create the serialized object file, or if the
-     * resource is blocked.
+    /**
+     * Serializa a saida da simulação {@link #output}, a {@link java.awt.List<SerializableSimulation>}
+     * e armazena no caminho dado.
+     *
+     * @param path Caminho onde a simulação serializada deve ser armazenada.
+     * @throws Exception se não conseguir encontrar o caminho ou criar o arquivo de serialização, ou ainda se algum
+     *                   destes recursos estiver bloqueado.
      */
     private void serializeSimulation(String path) throws Exception {
         FileOutputStream fileOut;
-        fileOut = new FileOutputStream(path + s +"SimulationObjects.srz");
+        fileOut = new FileOutputStream(path + s + "SimulationObjects.srz");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(getOutput());
         out.close();
     }
 
     /**
-     * Validate conditions to run tasks, if there exist a meteorologic file to execute a
-     * simulation and if the user selected necessary elements and filled field correctly
-     * inside data range limitations.
+     * Valida a entrada do modelo, verifica a existência de um arquivo meteorológico de entrada e realiza algumas
+     * validações básicas. É recomendável complementar este método.
      */
-    protected abstract void validateInput();
-
-    /**
-     * Generate a list of inputs compatible with the current used <b>mathematic model interface
-     * </b> based on the <b>number of simulated years</b>.
-     *
-     * @return A list of input lists compatible with the current used <b>mathematic model</b>
-     *         generated with base on the <b>number of years to simulate</b>.
-     */
-    protected abstract List<List<String>> modelInputList();
-
-    protected abstract String getExecutionYear(List<String> simulationYearInput);
-    protected abstract List<String> executionNewInputList(List<String> simulationYearInput);
-    protected abstract Integer ParameterComparatorIndex();
-
+    protected void validateInput() {
+        if (!(new File(Util.meteorologicFile)).exists()) {
+            failed(Util.getText(90));
+            logger.log(Level.WARNING, Util.getText(90));
+        }
+    }
 }
