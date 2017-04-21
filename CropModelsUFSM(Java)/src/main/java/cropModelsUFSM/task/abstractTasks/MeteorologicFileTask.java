@@ -2,13 +2,15 @@ package cropModelsUFSM.task.abstractTasks;
 
 import cropModelsUFSM.support.Util;
 import cropModelsUFSM.task.Task;
-import cropModelsUFSM.task.TaskInterfaces.TaskObserver;
+import cropModelsUFSM.task.taskInterfaces.TaskObserver;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+<<<<<<< HEAD:CropModelsUFSM(Java)/src/main/java/cropModelsUFSM/task/abstractTasks/MeteorologicFileTask.java
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,9 +19,12 @@ import java.util.logging.Level;
 
 
 import static cropModelsUFSM.support.Util.logger;
+=======
+>>>>>>> FrameworkTasksRefinement:CropModelsUFSM(Java)/src/main/java/cropModelsUFSM/task/abstractTasks/MeteorologicFileTask.java
 
 /**
- *
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
  */
 public abstract class MeteorologicFileTask extends Task<File,String> {
 
@@ -49,19 +54,14 @@ public abstract class MeteorologicFileTask extends Task<File,String> {
 
     /**
      *
+     * @throws Exception
      */
     @Override
-    public void run() {
-        try {
-            readMeteorologicData();
-            validateHeader();
-            validateData();
-            getRangeAndStore();
-            if(!Thread.currentThread().isInterrupted()) succeeded();
-        } catch (IOException e) {
-            failed("program failure!");
-            logger.log(Level.SEVERE, e.toString(), e);
-        }
+    protected void onExecution() throws Exception {
+        readMeteorologicData();
+        validateHeader();
+        validateData();
+        getRangeAndStore();
     }
 
     /**
@@ -87,11 +87,6 @@ public abstract class MeteorologicFileTask extends Task<File,String> {
     }
 
     /**
-     *
-     */
-    protected abstract void validateData();
-
-    /**
      * @throws IOException
      */
     private void getRangeAndStore() throws IOException
@@ -112,4 +107,9 @@ public abstract class MeteorologicFileTask extends Task<File,String> {
         Util.createFilesFolder();
         Util.writeAfile(new File(Util.meteorologicFile), data);
     }
+
+    /**
+     *
+     */
+    protected abstract void validateData();
 }

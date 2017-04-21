@@ -1,5 +1,6 @@
 package cropModelsUFSM.graphic;
 
+import cropModelsUFSM.support.Util;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
@@ -9,15 +10,22 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import cropModelsUFSM.support.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static cropModelsUFSM.support.Util.images;
 
+/**
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
+ */
 public class ImageAnimation
 {
+
+    /**
+     *
+     */
     private  List<Image> imageList = new ArrayList<>();
     private final  SequentialTransition sequence;
     private final  Move move; private final  Fade fade;
@@ -25,6 +33,11 @@ public class ImageAnimation
     private final  ImageView frontImage, backImage;
     int currentImg = 0;
 
+    /**
+     *
+     * @param frontImage
+     * @param backImage
+     */
     public ImageAnimation (ImageView frontImage, ImageView backImage)
     {
         
@@ -37,6 +50,9 @@ public class ImageAnimation
         sequence.setCycleCount(1);
     }
 
+    /**
+     *
+     */
     public void play ()
     {
         sequence.play();
@@ -61,12 +77,25 @@ public class ImageAnimation
                 Classes de transicao especializadas
 ***********************************************************************/
 
-
+    /**
+     *
+     */
     class Move extends Transition
     {
+        /**
+         *
+         */
         private double x, y;
         private ImageView imv;
 
+        /**
+         *
+         * @param fps
+         * @param duration
+         * @param imv
+         * @param cyicles
+         * @param reverse
+         */
         public Move (Double fps, Duration duration, ImageView imv,
                      int cyicles, boolean reverse)
         {
@@ -77,6 +106,10 @@ public class ImageAnimation
             setAutoReverse(reverse);
         }
 
+        /**
+         *
+         * @param frac
+         */
         @Override
         protected void interpolate(double frac)
         {
@@ -92,11 +125,25 @@ public class ImageAnimation
         }
     }
 
+    /**
+     *
+     */
     class Fade extends Transition
     {
 
+        /**
+         *
+         */
         private ImageView imv;
 
+        /**
+         *
+         * @param fps
+         * @param duration
+         * @param imv
+         * @param cyicles
+         * @param reverse
+         */
         public Fade (Double fps, Duration duration, ImageView imv,
                      int cyicles, boolean reverse)
         {
@@ -107,6 +154,10 @@ public class ImageAnimation
             setAutoReverse(reverse);
         }
 
+        /**
+         *
+         * @param frac
+         */
         @Override
         protected void interpolate(double frac)
         {

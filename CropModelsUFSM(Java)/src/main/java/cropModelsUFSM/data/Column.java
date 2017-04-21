@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * universally intelligible interface. It's an sub-element of {@link Table}.
  * </pre>
  *
- *
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
  */
 public final class Column extends ArrayList<StringProperty> implements Serializable {
 

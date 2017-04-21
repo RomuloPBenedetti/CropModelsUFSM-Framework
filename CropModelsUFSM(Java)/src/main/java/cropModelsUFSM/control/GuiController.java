@@ -1,7 +1,15 @@
 package cropModelsUFSM.control;
 
+import cropModelsUFSM.data.task.SerializableSimulation;
+import cropModelsUFSM.data.task.VisualizableSimulation;
+import cropModelsUFSM.graphic.AnimationEvents;
+import cropModelsUFSM.graphic.ImageAnimation;
+import cropModelsUFSM.support.Util;
+import cropModelsUFSM.task.concreteTask.UnserializeSimulationTask;
+import cropModelsUFSM.task.Task;
+import cropModelsUFSM.task.taskInterfaces.TaskObserver;
 import cropModelsUFSM.task.abstractTasks.MeteorologicFileTask;
-import cropModelsUFSM.task.abstractTasks.SimulationTask;
+import cropModelsUFSM.task.concreteTask.SimulationTask;
 import cropModelsUFSM.task.abstractTasks.VisualizationTask;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -12,7 +20,10 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -29,14 +40,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import cropModelsUFSM.data.SerializableSimulation;
-import cropModelsUFSM.data.VisualizableSimulation;
-import cropModelsUFSM.graphic.AnimationEvents;
-import cropModelsUFSM.graphic.ImageAnimation;
-import cropModelsUFSM.support.Util;
-import cropModelsUFSM.task.ConcreteTask.ExtractSimulationTask;
-import cropModelsUFSM.task.Task;
-import cropModelsUFSM.task.TaskInterfaces.TaskObserver;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,10 +52,16 @@ import java.util.logging.Level;
 
 import static cropModelsUFSM.support.Util.*;
 
+/**
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
+ */
 public abstract class GuiController
         extends GenericFXController implements TaskObserver {
 
-    /**elements */
+    /**
+     *
+     */
     @FXML private ImageView upImv, downImv;
     @FXML private MediaView video;
 
@@ -71,6 +80,9 @@ public abstract class GuiController
     @FXML public AnchorPane warningPane;
     @FXML private Circle warningButton, simulationButtonCircle;
 
+    /**
+     *
+     */
     private static Tooltip tip = new Tooltip("");
     public static List<SerializableSimulation> currentSimulation;
     private Rectangle2D galeryViewport;
@@ -83,8 +95,10 @@ public abstract class GuiController
 
 *******************************************************************************/
 
-
-
+    /**
+     *
+     * @param stage
+     */
     @Override
     public void postInitializeTasks (Stage stage)
     {
@@ -96,6 +110,9 @@ public abstract class GuiController
         coldStart();
     }
 
+    /**
+     *
+     */
     public void menusBindInitialization()
     {
 
@@ -109,8 +126,14 @@ public abstract class GuiController
 
     }
 
+    /**
+     *
+     */
     protected abstract void InteractionElementsInitialization();
 
+    /**
+     *
+     */
     public void decideAnimation ()
     {
         try {
@@ -133,9 +156,10 @@ public abstract class GuiController
     }
 
 
-    /** This method detect on program start up, if there is any old results and/or meteorologic
-     *  data stored on the program root directory, presenting data range for any meteorologic
-     *  file found and showing the results list in SimulationMenus if any old result is found.
+    /**
+     * This method detect on program start up, if there is any old results and/or meteorologic
+     * data stored on the program root directory, presenting data range for any meteorologic
+     * file found and showing the results list in SimulationMenus if any old result is found.
      */
     public void coldStart() {
         File resultFolder = new File(resultFolderpath);
@@ -156,12 +180,30 @@ public abstract class GuiController
         }
     }
 
+    /**
+     *
+     * @param file
+     * @param guiController
+     * @return
+     */
     protected abstract MeteorologicFileTask
         newMeteorologicFileTask(File file, GuiController guiController);
 
+    /**
+     *
+     * @param input
+     * @param guiController
+     * @return
+     */
     protected abstract SimulationTask
     newSimulationTask(List<String> input, GuiController guiController);
 
+    /**
+     *
+     * @param input
+     * @param guiController
+     * @return
+     */
     protected abstract VisualizationTask
     newVisualizationTask(SerializableSimulation input, GuiController guiController);
 
@@ -171,6 +213,10 @@ public abstract class GuiController
 
     *******************************************************************************/
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void insertDataAction (MouseEvent event)
     {
@@ -182,6 +228,10 @@ public abstract class GuiController
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void runAction (MouseEvent event)
     {
@@ -189,6 +239,9 @@ public abstract class GuiController
         simulationTask.execute();
     }
 
+    /**
+     *
+     */
     private void valueListeners ()
     {
         simulationMenuA.getSelectionModel().selectedItemProperty().addListener(
@@ -196,9 +249,9 @@ public abstract class GuiController
             String simulationFolderName = simulationMenuA.getSelectionModel().getSelectedItem();
             if(simulationFolderName != null) {
                 String SimulationPath = resultFolderpath + s + simulationFolderName;
-                ExtractSimulationTask extractSimulationTask;
-                extractSimulationTask = new ExtractSimulationTask(SimulationPath, this);
-                extractSimulationTask.execute();
+                UnserializeSimulationTask unserializeSimulationTask;
+                unserializeSimulationTask = new UnserializeSimulationTask(SimulationPath, this);
+                unserializeSimulationTask.execute();
             }
         });
 
@@ -214,8 +267,17 @@ public abstract class GuiController
         Listenners();
     }
 
+    /**
+     *
+     */
     protected abstract void Listenners();
 
+    /**
+     *
+     * @param warning
+     * @param from
+     * @param to
+     */
     public void warningNature (String warning, Color from, Color to)
     {
         tip.setText(warning);
@@ -230,6 +292,10 @@ public abstract class GuiController
 *******************************************************************************/
 
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void settingsAction (Event event)
     {
@@ -242,6 +308,10 @@ public abstract class GuiController
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void legendAction (Event event)
     {
@@ -254,6 +324,10 @@ public abstract class GuiController
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void aboutAction (Event event)
     {
@@ -266,6 +340,10 @@ public abstract class GuiController
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void helpAction (Event event)
     {
@@ -278,8 +356,10 @@ public abstract class GuiController
         }
     }
 
-
-
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void changePaneAction (MouseEvent event)
     {
@@ -295,7 +375,7 @@ public abstract class GuiController
             tables.setVisible(true);
             charts.setVisible(false);
         }
-        if(label.contains("CHART") || label.contains("GR\u0193F")){
+        if(label.contains("CHART") || label.contains("GRÁF")){
             simulation.setVisible(false);
             tables.setVisible(false);
             charts.setVisible(true);
@@ -314,6 +394,10 @@ public abstract class GuiController
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     protected void maximizeAction (MouseEvent event)
     {
@@ -338,6 +422,10 @@ public abstract class GuiController
         super.maximizeAction(event);
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void alertTip (MouseEvent event)
     {
@@ -352,9 +440,10 @@ public abstract class GuiController
 
      **************************************************************************/
 
-
-
-
+    /**
+     *
+     * @return
+     */
     private File getMeteoroloficFile ()
     {
         FileChooser fileChooser = new FileChooser();
@@ -364,12 +453,25 @@ public abstract class GuiController
         return fileChooser.showOpenDialog(stage);
     }
 
+    /**
+     *
+     * @param warning
+     */
     private static void showWarning (String warning)
     {
         warningStage = warn(warningStage, Util.WarningFxmlLoader, Util.warningFxml,
                     "cropModelsUFSM Manual", warning);
     }
 
+    /**
+     *
+     * @param stage
+     * @param loader
+     * @param fxml
+     * @param winTitle
+     * @param url
+     * @return
+     */
     private Stage newWindow (Stage stage, FXMLLoader loader, InputStream fxml,
                             String winTitle, String url)
     {
@@ -404,6 +506,15 @@ public abstract class GuiController
         return stage;
     }
 
+    /**
+     *
+     * @param stage
+     * @param loader
+     * @param fxml
+     * @param winTitle
+     * @param warn
+     * @return
+     */
     private static Stage warn (Stage stage, FXMLLoader loader, InputStream fxml,
                              String winTitle, String warn)
     {
@@ -437,6 +548,13 @@ public abstract class GuiController
         return stage;
     }
 
+    /**
+     *
+     * @param newValue
+     * @param chart
+     * @param series
+     * @param index
+     */
     public void changeChartDataVisibility (Boolean newValue, LineChart chart,
                                             String series, int index)
     {
@@ -456,10 +574,22 @@ public abstract class GuiController
         }
     }
 
+    /**
+     *
+     * @param currentTaskSimulation
+     */
     protected abstract void setSimulationOnGui(VisualizableSimulation currentTaskSimulation);
 
+    /**
+     *
+     * @return
+     */
     protected abstract List<String> getSimulationInput();
 
+    /**
+     *
+     * @param simulationName
+     */
     private void updateSimulationMenus(String simulationName)
     {
         simulationMenuA.getItems().clear();
@@ -468,60 +598,70 @@ public abstract class GuiController
                 if (folder.isDirectory())
                     simulationMenuA.getItems().add(folder.getName());
 
-            System.out.println(simulationName);
             simulationMenuA.getSelectionModel().select(simulationName);
             updateYearsMenu();
         }
     }
 
+    /**
+     *
+     */
     private void updateYearsMenu()
     {
         simulationYearA.getItems().clear();
         currentSimulation.forEach(s -> {
-            simulationYearA.getItems().add(s.getParameter().get(3));
+            simulationYearA.getItems().add(String.valueOf(s.getYear()));
         });
         simulationYearA.getSelectionModel().select(0);
     }
 
+    /**
+     *
+     * @param thisTask
+     */
     @Override
-    public void acceptTask(Task validTask)
+    public void acceptTask(Task thisTask)
     {
         Platform.runLater(() -> {
             SerializableSimulation firstYear;
-            if(validTask instanceof SimulationTask){
-                currentSimulation = ((SimulationTask) validTask).getOutput();
+            if(thisTask instanceof SimulationTask){
+                currentSimulation = ((SimulationTask) thisTask).getOutput();
                 firstYear = currentSimulation.get(0);
                 VisualizationTask visualisationTask;
                 visualisationTask = newVisualizationTask(firstYear,this);
                 visualisationTask.execute();
                 try {
-                    updateSimulationMenus(Util.generateSimulationName(firstYear.getParameter()));
+                    updateSimulationMenus(Util.generateSimulationName(firstYear.getSimulationInput()));
                 } catch (Exception e) {
                     logger.log(Level.SEVERE , e.getMessage(), e);
                 }
                 AnimationEvents.simulationSucess(simulationButtonCircle, okImv, playImv,
                         Color.web("#a54bff"), Color.web("#43E186"));
             }
-            if(validTask instanceof VisualizationTask){
-                setSimulationOnGui(((VisualizationTask) validTask).getOutput());
+            if(thisTask instanceof VisualizationTask){
+                setSimulationOnGui(((VisualizationTask) thisTask).getOutput());
             }
-            if(validTask instanceof MeteorologicFileTask) {
+            if(thisTask instanceof MeteorologicFileTask) {
                 AnimationEvents.setDataRange(Duration.seconds(0.5), 1, dataLabel,
                         dataShape, Color.web("#D6462F"), Color.web("#43E186"),
-                        ((MeteorologicFileTask) validTask).getOutput());
+                        ((MeteorologicFileTask) thisTask).getOutput());
             }
-            if(validTask instanceof ExtractSimulationTask) {
-                currentSimulation = ((ExtractSimulationTask) validTask).getOutput();
+            if(thisTask instanceof UnserializeSimulationTask) {
+                currentSimulation = ((UnserializeSimulationTask) thisTask).getOutput();
                 updateYearsMenu();
             }
         });
     }
 
 
+    /**
+     *
+     * @param thisTask
+     * @param warning
+     */
     @Override
-    public void regectTask(Task invalidTask, String warning)
+    public void regectTask(Task thisTask, String warning)
     {
         Platform.runLater(() -> showWarning(warning));
     }
 }
-
