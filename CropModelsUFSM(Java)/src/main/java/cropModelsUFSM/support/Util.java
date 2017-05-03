@@ -151,19 +151,23 @@ public abstract class Util {
         {
             if(zip == null)
             {
-                imagesString.forEach(
-                    i -> images.add(loader.getResourceAsStream(i)));
-                icon = new Image(loader.getResourceAsStream(iconString));
-                fontsString.forEach(f -> fonts.add(loader.getResourceAsStream(f)));
-                fxml = loader.getResourceAsStream(fxmlString);
-                helpFxml = loader.getResourceAsStream(helpFxmlString);
-                legendFxml = loader.getResourceAsStream(helpFxmlString);
-                aboutFxml = loader.getResourceAsStream(helpFxmlString);
-                warningFxml = loader.getResourceAsStream(warningFxmlString);
-                configFxml = loader.getResourceAsStream(configFxmlString);
-                css = loader.getResourceAsStream(cssString);
-                winIn = loader.getResourceAsStream(winString);
-                nixIn = loader.getResourceAsStream(nixString);
+                try {
+                    imagesString.forEach(
+                            i -> images.add(loader.getResourceAsStream(i)));
+                    icon = new Image(loader.getResourceAsStream(iconString));
+                    fontsString.forEach(f -> fonts.add(loader.getResourceAsStream(f)));
+                    fxml = loader.getResourceAsStream(fxmlString);
+                    helpFxml = loader.getResourceAsStream(helpFxmlString);
+                    legendFxml = loader.getResourceAsStream(helpFxmlString);
+                    aboutFxml = loader.getResourceAsStream(helpFxmlString);
+                    warningFxml = loader.getResourceAsStream(warningFxmlString);
+                    configFxml = loader.getResourceAsStream(configFxmlString);
+                    css = loader.getResourceAsStream(cssString);
+                    winIn = loader.getResourceAsStream(winString);
+                    nixIn = loader.getResourceAsStream(nixString);
+                } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             }
         }
         loadExecutables();
