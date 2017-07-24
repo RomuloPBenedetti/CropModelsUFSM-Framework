@@ -303,11 +303,11 @@ public abstract class Util {
         String OS = System.getProperty("os.name").toLowerCase();
         if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
             String[] linx =
-                {"/bin/sh", "-c", "./" + nixString + " < " + parameters};
+                {"/bin/sh", "-c", "./" + nixString + " -I/O=CMUFSM < " + parameters};
             return linx;
         } else {
             String[] win =
-                {"cmd.exe", "/c", ".\\" + winString + " < .\\" + parameters};
+                {"cmd.exe", "/c", ".\\" + winString + " -I/O=CMUFSM < .\\" + parameters};
             return win;
         }
     }

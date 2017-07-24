@@ -69,8 +69,8 @@ public abstract class GuiController
     @FXML private ImageView okImv, playImv;
 
     @FXML private AnchorPane simulation, tables, charts;
-    @FXML private AnchorPane meteorologic, development;
-    @FXML private VBox meteorologicLegend, developmentLegend;
+    @FXML private AnchorPane meteorologic, development, mass;
+    @FXML private VBox meteorologicLegend, developmentLegend, massLegend;
 
     @FXML public Label dataLabel;
     @FXML private Shape dataShape;
@@ -384,14 +384,26 @@ public abstract class GuiController
         if(label.contains("METEORO")){
             meteorologic.setVisible(true);
             meteorologicLegend.setVisible(true);
+            mass.setVisible(false);
+            massLegend.setVisible(false);
             development.setVisible(false);
             developmentLegend.setVisible(false);
         }
-        if(label.contains("EVOLU") || label.contains("PROGRESS")){
+        if(label.contains("DESENV") || label.contains("DEVELOP")){
             meteorologic.setVisible(false);
             meteorologicLegend.setVisible(false);
+            mass.setVisible(false);
+            massLegend.setVisible(false);
             development.setVisible(true);
             developmentLegend.setVisible(true);
+        }
+        if(label.contains("MASS") || label.contains("MASS")) {
+            meteorologic.setVisible(false);
+            meteorologicLegend.setVisible(false);
+            development.setVisible(false);
+            developmentLegend.setVisible(false);
+            mass.setVisible(true);
+            massLegend.setVisible(true);
         }
     }
 
@@ -460,7 +472,7 @@ public abstract class GuiController
      */
     private static void showWarning (String warning)
     {
-        System.out.println(warning);
+        System.out.println(warning + "testandoddddd");
         warningStage = warn(warningStage, Util.WarningFxmlLoader, Util.warningFxml,
                     "cropModelsUFSM Manual", warning);
     }

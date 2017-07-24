@@ -19,8 +19,9 @@ public final class TaskController {
      * {@link #taskExecutor} Fila de execução
      */
     private static final Integer cores =  Runtime.getRuntime().availableProcessors();
-    private static final ExecutorService taskExecutor = new ThreadPoolExecutor (cores*2, cores*4, 2, TimeUnit.MINUTES,
-                                                                                new LinkedBlockingQueue<>());
+    private static final ExecutorService taskExecutor =
+            new ThreadPoolExecutor (cores*2, cores*4, 2, TimeUnit.MINUTES,
+                                    new LinkedBlockingQueue<>());
 
     /**
      * Adiciona uma nova tarefa a fila de execução para ser executada o quanto antes.

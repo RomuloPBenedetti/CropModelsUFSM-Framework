@@ -90,12 +90,14 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
 
+        System.out.println("I'm here1");
         String line;
         BufferedReader error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         while((line = error.readLine()) != null){
             System.out.println(line);
         }
         error.close();
+        System.out.println("I'm here2");
 
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         while((line=input.readLine()) != null){
@@ -110,11 +112,13 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
         printStream.flush();
         printStream.close();
 
+        System.out.println("I'm here3");
 
         List<String> result = Util.readAfile(new File(outputPathName));
         result.set(0, Util.getText(104));
 
         getOutput().add(new SerializableSimulation(result, getInput(), year));
+        System.out.println("I'm here4");
     }
 
     /**
@@ -127,11 +131,12 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
     }
 
     /**
-     * Cria a hierarquia de diretórios para armazenar e organizar as simulações, movendo resultados e parametros assim
-     * como traduzindo o cabeçalho dos resultados dependendo do locale. Ao final chama
-     * {@link #serializeSimulation(String)} para armazenar uma versão serializada da simulação, com o objetivo de tornar
-     * a navegação entre as simulações mais rápida ao permitir que os dados sejam passados diretamente para a tarefa de
-     * visualização.
+     * Cria a hierarquia de diretórios para armazenar e organizar as simulações:
+     * 1. Movendo resultados e parametros em texto das pastas convencionais do modelo Fortran.
+     * 2. Traduzindo o cabeçalho do arquivo de resultados a depender do locale.
+     * 3. chama {@link #serializeSimulation(String)} para armazenar uma versão serializada da simulação, com o objetivo
+     *    de tornar a navegação entre as simulações mais rápida ao permitir que os dados sejam passados diretamente para
+     *    a tarefa @{@link VisualizationTask}.
      *
      * @throws Exception se não conseguir mover os arquivos ou criar o arquivo de serialização.
      */
