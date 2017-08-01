@@ -86,7 +86,7 @@ public abstract class GenericFXController implements Initializable {
 
     /**
      *
-     * @param eventl
+     * @param event
      */
     @FXML
     private void closeAction (MouseEvent event) {

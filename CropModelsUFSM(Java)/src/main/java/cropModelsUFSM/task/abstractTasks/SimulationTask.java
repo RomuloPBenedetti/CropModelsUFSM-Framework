@@ -10,10 +10,7 @@ import cropModelsUFSM.task.taskInterfaces.TaskObserver;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 
 import static cropModelsUFSM.support.Util.*;
@@ -46,7 +43,7 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
      */
     public SimulationTask(SimulationInput input, TaskObserver observer) {
         super(input, observer);
-        setOutput(Collections.synchronizedList(new ArrayList<>()));
+        setOutput(Collections.synchronizedList(new LinkedList<>()));
     }
 
     /**
@@ -90,14 +87,12 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
 
-        System.out.println("I'm here1");
         String line;
         BufferedReader error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         while((line = error.readLine()) != null){
             System.out.println(line);
         }
         error.close();
-        System.out.println("I'm here2");
 
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         while((line=input.readLine()) != null){
@@ -112,13 +107,10 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
         printStream.flush();
         printStream.close();
 
-        System.out.println("I'm here3");
-
         List<String> result = Util.readAfile(new File(outputPathName));
         result.set(0, Util.getText(104));
 
         getOutput().add(new SerializableSimulation(result, getInput(), year));
-        System.out.println("I'm here4");
     }
 
     /**

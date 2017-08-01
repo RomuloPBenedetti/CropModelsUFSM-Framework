@@ -62,7 +62,7 @@ public abstract class Task<IN,OUT> implements Runnable {
             if(!Thread.currentThread().isInterrupted())
                 succeeded();
         } catch (Exception e) {
-            failed("program failure, exception on execution!");
+            failed("program failure, exception on execution! Please, Look at log file");
             logger.log(Level.SEVERE, e.toString(), e);
         }
     }

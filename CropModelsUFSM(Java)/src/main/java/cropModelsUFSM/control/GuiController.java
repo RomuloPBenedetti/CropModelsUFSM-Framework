@@ -1,5 +1,6 @@
 package cropModelsUFSM.control;
 
+import cropModelsUFSM.data.Tuple;
 import cropModelsUFSM.data.task.SerializableSimulation;
 import cropModelsUFSM.data.task.SimulationInput;
 import cropModelsUFSM.data.task.VisualizableSimulation;
@@ -206,7 +207,7 @@ public abstract class GuiController
      * @return
      */
     protected abstract VisualizationTask
-    newVisualizationTask(SerializableSimulation input, GuiController guiController);
+    newVisualizationTask(Tuple<SerializableSimulation, List<SerializableSimulation>> input, GuiController guiController);
 
     /*******************************************************************************
 
@@ -261,7 +262,7 @@ public abstract class GuiController
             Integer index = simulationYearA.getSelectionModel().getSelectedIndex();
             if(index<0 || index > currentSimulation.size()-1) index = 0;
             SerializableSimulation selectedYear = currentSimulation.get(index);
-            VisualizationTask visualizationTask = newVisualizationTask(selectedYear,this);
+            VisualizationTask visualizationTask = newVisualizationTask(new Tuple<>(selectedYear, currentSimulation),this);
             visualizationTask.execute();
         });
 
@@ -472,7 +473,7 @@ public abstract class GuiController
      */
     private static void showWarning (String warning)
     {
-        System.out.println(warning + "testandoddddd");
+        System.out.println(warning);
         warningStage = warn(warningStage, Util.WarningFxmlLoader, Util.warningFxml,
                     "cropModelsUFSM Manual", warning);
     }
@@ -642,7 +643,7 @@ public abstract class GuiController
                 currentSimulation = ((SimulationTask) thisTask).getOutput();
                 firstYear = currentSimulation.get(0);
                 VisualizationTask visualisationTask;
-                visualisationTask = newVisualizationTask(firstYear,this);
+                visualisationTask = newVisualizationTask(new Tuple<>(firstYear,currentSimulation),this);
                 visualisationTask.execute();
                 try {
                     updateSimulationMenus(Util.generateSimulationName(firstYear.getSimulationInput()));
