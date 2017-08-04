@@ -398,7 +398,7 @@ public abstract class GuiController
             development.setVisible(true);
             developmentLegend.setVisible(true);
         }
-        if(label.contains("MASS") || label.contains("MASS")) {
+        if(label.contains("CRESC") || label.contains("GROW")) {
             meteorologic.setVisible(false);
             meteorologicLegend.setVisible(false);
             development.setVisible(false);
@@ -651,7 +651,7 @@ public abstract class GuiController
                     logger.log(Level.SEVERE , e.getMessage(), e);
                 }
                 AnimationEvents.simulationSucess(simulationButtonCircle, okImv, playImv,
-                        Color.web("#a54bff"), Color.web("#43E186"));
+                        Color.web(getText(134)), Color.web("#43E186"));
             }
             if(thisTask instanceof VisualizationTask){
                 setSimulationOnGui(((VisualizationTask) thisTask).getOutput());
