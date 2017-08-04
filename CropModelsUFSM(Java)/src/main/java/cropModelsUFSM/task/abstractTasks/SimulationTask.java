@@ -96,7 +96,7 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
 
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         while((line=input.readLine()) != null){
-            System.out.println(line);
+            //System.out.println(line);
         }
 
         input.close();
