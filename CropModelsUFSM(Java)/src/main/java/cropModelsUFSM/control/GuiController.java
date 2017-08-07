@@ -22,10 +22,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -141,12 +138,12 @@ public abstract class GuiController
         try {
             String source = loader.getResource("vd.mp4").toURI().toURL().toString();
             Media media = new Media(source);
-            if(media.getError() != null) {
-                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                video.setMediaPlayer(mediaPlayer);
-                mediaPlayer.play();
-            }
-        } catch(URISyntaxException | MalformedURLException ex) {
+            System.out.println(source);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            video.setMediaPlayer(mediaPlayer);
+            mediaPlayer.play();
+        } catch(Exception ex) {
+            // sistemas que não tem suporte correto ao libavformat/codec vão gerar exception
             ex.printStackTrace();
         }
         finally {
@@ -365,7 +362,8 @@ public abstract class GuiController
     @FXML
     private void changePaneAction (MouseEvent event)
     {
-        String label = ((Button)event.getSource() ).getText();
+        String label = ((ToggleButton)event.getSource() ).getText();
+
         if (label.contains("SIMULA"))
         {
             simulation.setVisible(true);

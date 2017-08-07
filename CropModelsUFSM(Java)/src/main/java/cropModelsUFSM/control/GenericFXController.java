@@ -65,12 +65,6 @@ public abstract class GenericFXController implements Initializable {
     {
         maxWidth = primaryScreenBounds.getWidth();
         maxHeight = primaryScreenBounds.getHeight();
-        if(maxWidth > 1920) {
-            roundBorderPane.setTranslateX(minWidth/4);
-            roundBorderPane.setTranslateY(minWidth/4);
-            roundBorderPane.setScaleX(1.5);
-            roundBorderPane.setScaleY(1.5);
-        }
         transparentPane.setMaxSize(maxWidth, maxHeight);
         roundBorderPane.setMaxSize(maxWidth, maxHeight);
     }

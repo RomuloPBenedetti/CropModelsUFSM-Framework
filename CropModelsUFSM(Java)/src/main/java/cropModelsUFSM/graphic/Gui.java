@@ -78,10 +78,6 @@ public class Gui extends Application {
     public static void loadCropModelsUfsm ()
     {
         Util.loadRessources();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            Util.unloadExecutables();
-            Util.unloadLogger();
-        }, "Shutdown-thread"));
         launch();
     }
 
