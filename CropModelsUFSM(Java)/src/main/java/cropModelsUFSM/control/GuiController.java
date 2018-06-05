@@ -1,5 +1,6 @@
 package cropModelsUFSM.control;
 
+import cropModelsUFSM.data.Tuple;
 import cropModelsUFSM.data.task.SerializableSimulation;
 import cropModelsUFSM.data.task.SimulationInput;
 import cropModelsUFSM.data.task.VisualizableSimulation;
@@ -21,10 +22,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -69,8 +67,8 @@ public abstract class GuiController
     @FXML private ImageView okImv, playImv;
 
     @FXML private AnchorPane simulation, tables, charts;
-    @FXML private AnchorPane meteorologic, development;
-    @FXML private VBox meteorologicLegend, developmentLegend;
+    @FXML private AnchorPane meteorologic, development, mass;
+    @FXML private VBox meteorologicLegend, developmentLegend, massLegend;
 
     @FXML public Label dataLabel;
     @FXML private Shape dataShape;
@@ -140,12 +138,12 @@ public abstract class GuiController
         try {
             String source = loader.getResource("vd.mp4").toURI().toURL().toString();
             Media media = new Media(source);
-            if(media.getError() != null) {
-                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                video.setMediaPlayer(mediaPlayer);
-                mediaPlayer.play();
-            }
-        } catch(URISyntaxException | MalformedURLException ex) {
+            System.out.println(source);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            video.setMediaPlayer(mediaPlayer);
+            mediaPlayer.play();
+        } catch(Exception ex) {
+            // sistemas que não tem suporte correto ao libavformat/codec vão gerar exception
             ex.printStackTrace();
         }
         finally {
@@ -206,7 +204,7 @@ public abstract class GuiController
      * @return
      */
     protected abstract VisualizationTask
-    newVisualizationTask(SerializableSimulation input, GuiController guiController);
+    newVisualizationTask(Tuple<SerializableSimulation, List<SerializableSimulation>> input, GuiController guiController);
 
     /*******************************************************************************
 
@@ -261,7 +259,7 @@ public abstract class GuiController
             Integer index = simulationYearA.getSelectionModel().getSelectedIndex();
             if(index<0 || index > currentSimulation.size()-1) index = 0;
             SerializableSimulation selectedYear = currentSimulation.get(index);
-            VisualizationTask visualizationTask = newVisualizationTask(selectedYear,this);
+            VisualizationTask visualizationTask = newVisualizationTask(new Tuple<>(selectedYear, currentSimulation),this);
             visualizationTask.execute();
         });
 
@@ -364,7 +362,8 @@ public abstract class GuiController
     @FXML
     private void changePaneAction (MouseEvent event)
     {
-        String label = ((Button)event.getSource() ).getText();
+        String label = ((ToggleButton)event.getSource() ).getText();
+
         if (label.contains("SIMULA"))
         {
             simulation.setVisible(true);
@@ -384,14 +383,26 @@ public abstract class GuiController
         if(label.contains("METEORO")){
             meteorologic.setVisible(true);
             meteorologicLegend.setVisible(true);
+            mass.setVisible(false);
+            massLegend.setVisible(false);
             development.setVisible(false);
             developmentLegend.setVisible(false);
         }
-        if(label.contains("EVOLU") || label.contains("PROGRESS")){
+        if(label.contains("DESENV") || label.contains("DEVELOP")){
             meteorologic.setVisible(false);
             meteorologicLegend.setVisible(false);
+            mass.setVisible(false);
+            massLegend.setVisible(false);
             development.setVisible(true);
             developmentLegend.setVisible(true);
+        }
+        if(label.contains("CRESC") || label.contains("GROW")) {
+            meteorologic.setVisible(false);
+            meteorologicLegend.setVisible(false);
+            development.setVisible(false);
+            developmentLegend.setVisible(false);
+            mass.setVisible(true);
+            massLegend.setVisible(true);
         }
     }
 
@@ -630,7 +641,7 @@ public abstract class GuiController
                 currentSimulation = ((SimulationTask) thisTask).getOutput();
                 firstYear = currentSimulation.get(0);
                 VisualizationTask visualisationTask;
-                visualisationTask = newVisualizationTask(firstYear,this);
+                visualisationTask = newVisualizationTask(new Tuple<>(firstYear,currentSimulation),this);
                 visualisationTask.execute();
                 try {
                     updateSimulationMenus(Util.generateSimulationName(firstYear.getSimulationInput()));
@@ -638,7 +649,7 @@ public abstract class GuiController
                     logger.log(Level.SEVERE , e.getMessage(), e);
                 }
                 AnimationEvents.simulationSucess(simulationButtonCircle, okImv, playImv,
-                        Color.web("#a54bff"), Color.web("#43E186"));
+                        Color.web(getText(134)), Color.web("#43E186"));
             }
             if(thisTask instanceof VisualizationTask){
                 setSimulationOnGui(((VisualizationTask) thisTask).getOutput());

@@ -99,14 +99,14 @@ public abstract class Util {
     public static final String resultFolderpath = "results";
 
     /**
-     *
+     * gerar com pdf2htmlEX
      */
-    public static final String helpHtml_EN = "help/EN/help.xhtml";
-    public static final String helpHtml_PT = "help/PT/help.xhtml";
-    public static final String aboutHtml_EN = "about/EN/about.xhtml";
-    public static final String aboutHtml_PT = "about/PT/about.xhtml";
-    public static final String legendHtml_EN = "legend/EN/legend.xhtml";
-    public static final String legendHtml_PT = "legend/PT/legend.xhtml";
+    public static final String helpHtml_EN = "help/EN/help.html";
+    public static final String helpHtml_PT = "help/PT/help.html";
+    public static final String aboutHtml_EN = "about/EN/about.html";
+    public static final String aboutHtml_PT = "about/PT/about.html";
+    public static final String legendHtml_EN = "legend/EN/legend.html";
+    public static final String legendHtml_PT = "legend/PT/legend.html";
 
     /**
      *
@@ -151,19 +151,23 @@ public abstract class Util {
         {
             if(zip == null)
             {
-                imagesString.forEach(
-                    i -> images.add(loader.getResourceAsStream(i)));
-                icon = new Image(loader.getResourceAsStream(iconString));
-                fontsString.forEach(f -> fonts.add(loader.getResourceAsStream(f)));
-                fxml = loader.getResourceAsStream(fxmlString);
-                helpFxml = loader.getResourceAsStream(helpFxmlString);
-                legendFxml = loader.getResourceAsStream(helpFxmlString);
-                aboutFxml = loader.getResourceAsStream(helpFxmlString);
-                warningFxml = loader.getResourceAsStream(warningFxmlString);
-                configFxml = loader.getResourceAsStream(configFxmlString);
-                css = loader.getResourceAsStream(cssString);
-                winIn = loader.getResourceAsStream(winString);
-                nixIn = loader.getResourceAsStream(nixString);
+                try {
+                    imagesString.forEach(
+                            i -> images.add(loader.getResourceAsStream(i)));
+                    icon = new Image(loader.getResourceAsStream(iconString));
+                    fontsString.forEach(f -> fonts.add(loader.getResourceAsStream(f)));
+                    fxml = loader.getResourceAsStream(fxmlString);
+                    helpFxml = loader.getResourceAsStream(helpFxmlString);
+                    legendFxml = loader.getResourceAsStream(helpFxmlString);
+                    aboutFxml = loader.getResourceAsStream(helpFxmlString);
+                    warningFxml = loader.getResourceAsStream(warningFxmlString);
+                    configFxml = loader.getResourceAsStream(configFxmlString);
+                    css = loader.getResourceAsStream(cssString);
+                    winIn = loader.getResourceAsStream(winString);
+                    nixIn = loader.getResourceAsStream(nixString);
+                } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             }
         }
         loadExecutables();
@@ -195,11 +199,14 @@ public abstract class Util {
      *
      */
     private static void loadExecutables() {
+        File nixFile, winFile;
         FileOutputStream nixOut, winOut;
-
         try {
-            nixOut = new FileOutputStream(new File(nixString));
-            winOut = new FileOutputStream(new File(winString));
+            nixFile = new File(nixString);
+            winFile = new File(winString);
+            nixFile.deleteOnExit(); winFile.deleteOnExit();
+            nixOut = new FileOutputStream(nixFile);
+            winOut = new FileOutputStream(winFile);
 
             int read = 0;
             byte[] bytes = new byte[1024];
@@ -217,21 +224,13 @@ public abstract class Util {
                     winOut.write(bytes, 0, read);
                 }
             }
+            winOut.close(); winIn.close(); nixOut.close(); nixIn.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    /**
-     *
-     */
-    public static void unloadExecutables(){
-        (new File (nixString)).delete();
-        (new File (winString)).delete();
-    }
-
     /**
      *
      */
@@ -299,11 +298,11 @@ public abstract class Util {
         String OS = System.getProperty("os.name").toLowerCase();
         if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
             String[] linx =
-                {"/bin/sh", "-c", "./" + nixString + " < " + parameters};
+                {"/bin/sh", "-c", "./" + nixString + " -I/O=CMUFSM < " + parameters};
             return linx;
         } else {
             String[] win =
-                {"cmd.exe", "/c", ".\\" + winString + " < .\\" + parameters};
+                {"cmd.exe", "/c", ".\\" + winString + " -I/O=CMUFSM < .\\" + parameters};
             return win;
         }
     }

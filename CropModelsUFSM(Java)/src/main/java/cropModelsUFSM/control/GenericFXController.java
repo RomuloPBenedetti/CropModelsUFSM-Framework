@@ -82,16 +82,6 @@ public abstract class GenericFXController implements Initializable {
      * @param event
      */
     @FXML
-    private void closeAction (MouseEvent event) {
-        stage.close();
-        TaskController.finalizeTaskPool();
-    }
-
-    /**
-     *
-     * @param event
-     */
-    @FXML
     private void closeAction (Event event) {
         stage.close();
         TaskController.finalizeTaskPool();

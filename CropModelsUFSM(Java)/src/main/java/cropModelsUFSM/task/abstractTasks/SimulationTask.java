@@ -10,10 +10,7 @@ import cropModelsUFSM.task.taskInterfaces.TaskObserver;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 
 import static cropModelsUFSM.support.Util.*;
@@ -46,7 +43,7 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
      */
     public SimulationTask(SimulationInput input, TaskObserver observer) {
         super(input, observer);
-        setOutput(Collections.synchronizedList(new ArrayList<>()));
+        setOutput(Collections.synchronizedList(new LinkedList<>()));
     }
 
     /**
@@ -99,7 +96,7 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
 
         BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
         while((line=input.readLine()) != null){
-            System.out.println(line);
+            //System.out.println(line);
         }
 
         input.close();
@@ -109,7 +106,6 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
         printStream.println();
         printStream.flush();
         printStream.close();
-
 
         List<String> result = Util.readAfile(new File(outputPathName));
         result.set(0, Util.getText(104));
@@ -127,11 +123,12 @@ public abstract class SimulationTask extends Task<SimulationInput, List<Serializ
     }
 
     /**
-     * Cria a hierarquia de diretórios para armazenar e organizar as simulações, movendo resultados e parametros assim
-     * como traduzindo o cabeçalho dos resultados dependendo do locale. Ao final chama
-     * {@link #serializeSimulation(String)} para armazenar uma versão serializada da simulação, com o objetivo de tornar
-     * a navegação entre as simulações mais rápida ao permitir que os dados sejam passados diretamente para a tarefa de
-     * visualização.
+     * Cria a hierarquia de diretórios para armazenar e organizar as simulações:
+     * 1. Movendo resultados e parametros em texto das pastas convencionais do modelo Fortran.
+     * 2. Traduzindo o cabeçalho do arquivo de resultados a depender do locale.
+     * 3. chama {@link #serializeSimulation(String)} para armazenar uma versão serializada da simulação, com o objetivo
+     *    de tornar a navegação entre as simulações mais rápida ao permitir que os dados sejam passados diretamente para
+     *    a tarefa @{@link VisualizationTask}.
      *
      * @throws Exception se não conseguir mover os arquivos ou criar o arquivo de serialização.
      */
