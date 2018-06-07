@@ -4,7 +4,7 @@ mainClassName = "cropModelsUFSM.graphic.Gui"
 applicationDefaultJvmArgs = ["-Dprism.text=t2k -Dprism.lcdtext=true -Xms256m"]
 
 sourceCompatibility = 1.8
-version = '0.5'
+version = '0.6'
 
 if (!hasProperty('mainClass')) { ext.mainClass = 'cropModelsUFSM.graphic.Gui' }
 

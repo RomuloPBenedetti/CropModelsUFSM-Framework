@@ -1,10 +1,11 @@
 package cropModelsUFSM.support;
 
-import java.util.List;
+import cropModelsUFSM.data.task.SimulationInput;
 
 /**
- * Created by romulo on 12/06/16.
+ * @author romulo Pulcinelli Benedetti
+ * @see cropModelsUFSM
  */
-public interface UtilVirtualMethods{
-    public String generateSimulationName(List<String> input);
+public interface UtilVirtualMethods {
+    public String generateSimulationName(SimulationInput input);
 }

@@ -10,17 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-<<<<<<< HEAD:CropModelsUFSM(Java)/src/main/java/cropModelsUFSM/task/abstractTasks/MeteorologicFileTask.java
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.Level;
-
-
-import static cropModelsUFSM.support.Util.logger;
-=======
->>>>>>> FrameworkTasksRefinement:CropModelsUFSM(Java)/src/main/java/cropModelsUFSM/task/abstractTasks/MeteorologicFileTask.java
 
 /**
  * @author romulo Pulcinelli Benedetti
